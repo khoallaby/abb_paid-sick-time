@@ -17,6 +17,7 @@ define('pstl_plugin_path',plugin_dir_path(__FILE__ ));
 require_once( dirname(__FILE__) . '/resources/controllers/Base.php');
 require_once( dirname(__FILE__) . '/resources/controllers/CustomPostTypes.php');
 require_once( dirname(__FILE__) . '/resources/controllers/PaidSickTime.php');
+require_once( dirname(__FILE__) . '/resources/controllers/Questions.php');
 
 
 function vard($s) {
