@@ -72,7 +72,22 @@ class Questions extends Base {
         # removes empty
         $questions = array_filter( $questions, function($value) { return $value !== ''; } );
 
-        update_option( Questions::$optionName, $questions );
+        $update = update_option( Questions::$optionName, $questions );
+
+        ## output an admin notice
+        if( $update ) {
+            add_action( 'admin_notices', function() use($update) {
+                if( $update ) {
+                    $message = 'Saved successfully!';
+                    $messageClass = 'updated fade';
+                } else {
+                    $message = 'Something went wrong..';
+                    $messageClass = 'error';
+                }
+
+                echo '<div class="' . $messageClass . '"><p><strong>' . __( $message ) . '</strong></p></div>';
+            } );
+        }
 
     }
 
