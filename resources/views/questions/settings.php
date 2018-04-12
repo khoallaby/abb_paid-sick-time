@@ -30,11 +30,13 @@ $questions = get_option( Questions::$optionName );
             <?php
             if ( $questions ) :
                 foreach ( $questions as $field ) {
+                    #Questions::getView('questions/settings-single-textarea');
                     ?>
                     <tr>
-                        <td width="90%">
-                            <textarea placeholder="Question.." rows="5" name="questions[]" style="width: 100%;"><?php if ($field != '') echo esc_attr( $field ); ?></textarea></td>
-                        <td width="10%"><a class="button remove-row" href="#1">Remove</a></td>
+                        <td>
+                            <textarea placeholder="" rows="5" name="questions[]" style="width: 100%;"><?php echo !empty($field) ? esc_attr( $field ) : ''; ?></textarea>
+                        </td>
+                        <td><a class="button remove-row" href="#">Remove</a></td>
                     </tr>
                     <?php
                 }
@@ -43,16 +45,16 @@ $questions = get_option( Questions::$optionName );
                 ?>
                 <tr>
                     <td>
-                        <textarea  placeholder="Question.." name="questions[]" cols="55" rows="5"></textarea>
+                        <textarea placeholder="" rows="5" name="questions[]" style="width: 100%;"></textarea>
                     </td>
-                    <td><a class="button  cmb-remove-row-button button-disabled" href="#">Remove</a></td>
+                    <td><a class="button cmb-remove-row-button button-disabled" href="#">Remove</a></td>
                 </tr>
             <?php endif; ?>
 
             <!-- empty hidden one for jQuery -->
             <tr class="empty-row screen-reader-text">
                 <td>
-                    <textarea placeholder="Question.." cols="55" rows="5" name="questions[]"></textarea>
+                    <textarea placeholder="" rows="5" name="questions[]" style="width: 100%;"></textarea>
                 </td>
                 <td><a class="button remove-row" href="#">Remove</a></td>
             </tr>
