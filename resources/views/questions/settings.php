@@ -1,1 +1,70 @@
-<h1><?php echo __( 'Questions' ); ?></h1>
+<?php
+namespace ABetterBalance\Plugin;
+
+
+$questions = get_option( Questions::$optionName );
+?>
+
+<script type="text/javascript">
+    jQuery(document).ready(function( $ ){
+        $( '#add-row' ).on('click', function() {
+            var row = $( '.empty-row.screen-reader-text' ).clone(true);
+            row.removeClass( 'empty-row screen-reader-text' );
+            row.insertBefore( '#repeatable-fieldset-one tbody>tr:last' );
+            return false;
+        });
+
+        $( '.remove-row' ).on('click', function() {
+            $(this).parents('tr').remove();
+            return false;
+        });
+    });
+</script>
+
+<div class="wrap">
+    <form name="form1" method="post" action="">
+        <h1><?php echo __( 'Questions' ); ?></h1>
+
+        <table id="repeatable-fieldset-one" width="100%">
+            <tbody>
+            <?php
+            if ( $questions ) :
+                foreach ( $questions as $field ) {
+                    ?>
+                    <tr>
+                        <td width="90%">
+                            <textarea placeholder="Question.." rows="5" name="questions[]" style="width: 100%;"><?php if ($field != '') echo esc_attr( $field ); ?></textarea></td>
+                        <td width="10%"><a class="button remove-row" href="#1">Remove</a></td>
+                    </tr>
+                    <?php
+                }
+            else :
+                // show a blank one
+                ?>
+                <tr>
+                    <td>
+                        <textarea  placeholder="Question.." name="questions[]" cols="55" rows="5"></textarea>
+                    </td>
+                    <td><a class="button  cmb-remove-row-button button-disabled" href="#">Remove</a></td>
+                </tr>
+            <?php endif; ?>
+
+            <!-- empty hidden one for jQuery -->
+            <tr class="empty-row screen-reader-text">
+                <td>
+                    <textarea placeholder="Question.." cols="55" rows="5" name="questions[]"></textarea>
+                </td>
+                <td><a class="button remove-row" href="#">Remove</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <p><a id="add-row" class="button" href="#">Add another</a></p>
+
+
+        <p class="submit">
+            <?php wp_nonce_field( Questions::$nonce, Questions::$nonce ); ?>
+            <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
+        </p>
+
+    </form>
+</div>

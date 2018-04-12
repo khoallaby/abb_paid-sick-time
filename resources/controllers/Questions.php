@@ -3,7 +3,7 @@ namespace ABetterBalance\Plugin;
 
 class Questions extends Base {
     public static $capability = 'edit_theme_options';
-    public static $optionName = 'pst-questions';
+    public static $optionName = 'pst_questions';
     public static $metaName   = '_questions';
     public static $nonce      = 'pst-questions-nonce';
 
@@ -15,6 +15,9 @@ class Questions extends Base {
         add_action( 'save_post', [ $this, 'saveRepeatableMetaBoxes' ] );
         add_action( 'admin_menu', [ $this, 'addSubmenu' ] );
 
+
+        add_action( 'load-edit_page_acme-submenu-page', 'acme_save_options' );
+
     }
 
 
@@ -22,15 +25,19 @@ class Questions extends Base {
      * Adds a submenu link 'Questions' under the CPT menu
      */
     public function addSubmenu() {
-        # $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function = '' ) {
-        add_submenu_page(
+        $menuSlug = 'questions';
+        $hook = add_submenu_page(
             'edit.php?post_type=' . PaidSickTime::$cptName,
             __( PaidSickTime::$cptFullName . ' Questions' ),
             __( 'Questions' ),
             static::$capability,
-            'questions',
+            $menuSlug,
             [ $this, 'submenuPage' ]
         );
+
+        # $hook = {cpt}_page_{menuslug}
+        # i.e. paid-sick-time-law_page_questions
+        add_action( 'load-' . $hook, [ $this, 'SaveQuestionsPage' ] );
     }
 
 
@@ -45,7 +52,27 @@ class Questions extends Base {
     /**
      * Saves the questions on the questions submenu page
      */
-    public function saveQuestionsPage() {
+    public static function saveQuestionsPage( $questions = [] ) {
+
+        if( empty(!$questions) )
+            $questions = $_POST['questions'];
+
+        if( empty(!$questions) ||
+            !isset( $_POST[ static::$nonce ] ) ||
+            !wp_verify_nonce( $_POST[ static::$nonce ], static::$nonce ) )
+            return;
+
+
+        if( !current_user_can( static::$capability) )
+            return;
+
+
+        # sanitize input
+        $questions = array_map( 'sanitize_textarea_field', $_POST['questions'] );
+        # removes empty
+        $questions = array_filter( $questions, function($value) { return $value !== ''; } );
+
+        update_option( Questions::$optionName, $questions );
 
     }
 
