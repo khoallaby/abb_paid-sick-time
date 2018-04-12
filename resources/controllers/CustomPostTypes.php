@@ -8,8 +8,7 @@ class CustomPostTypes extends Base {
      * https://wordpress.stackexchange.com/questions/17385/custom-post-type-templates-from-plugin-folder
      */
 	public function init() {
-
-        add_action( 'init', [ \ABetterBalance\Plugin\CustomPostTypes::get_instance(), 'registerAll' ]);
+        #add_action( 'init', [ \ABetterBalance\Plugin\CustomPostTypes::get_instance(), 'registerAll' ]);
 	}
 
 
@@ -73,7 +72,7 @@ class CustomPostTypes extends Base {
 			'capability_type'     => 'page',
 		];
 		$args = wp_parse_args( $args, $defaults );
-		register_post_type( ucwords( str_replace(' ', '-', $cptName) ), $args );
+		register_post_type( static::uncleanName($cptName), $args );
 
 	}
 
@@ -81,6 +80,10 @@ class CustomPostTypes extends Base {
 	public static function cleanName( $str ) {
 		return ucwords(str_replace( '-', ' ', $str ));
 	}
+
+    public static function uncleanName( $str ) {
+        return strtolower(str_replace( ' ', '-', $str ));
+    }
 
 }
 
