@@ -9,15 +9,11 @@ class CustomPostTypes extends Base {
      */
 	public function init() {
 
+        add_action( 'init', [ \ABetterBalance\Plugin\CustomPostTypes::get_instance(), 'registerAll' ]);
 	}
 
 
 	public function registerAll() {
-        $this->registerCpt( 'Paid sick time law', 'Paid sick time laws', [
-            'exclude_from_search' => true,
-            'supports'            => [ 'title', 'editor', 'thumbnail', 'custom-fields' ],
-            'taxonomies'          => [ 'category' ],
-        ] );
         //$this->register_tax( 'career-category', 'career-categories', 'careers' );
     }
 
@@ -88,4 +84,4 @@ class CustomPostTypes extends Base {
 
 }
 
-add_action( 'init', [ \ABetterBalance\Plugin\CustomPostTypes::get_instance(), 'registerAll' ]);
+add_action( 'init', [ \ABetterBalance\Plugin\CustomPostTypes::get_instance(), 'init' ]);
