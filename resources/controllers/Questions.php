@@ -32,7 +32,7 @@ class Questions extends Base {
 
 
     public function submenuPage() {
-        echo 'questions page';
+        static::getMenuView( 'questions/settings' );
     }
 
 

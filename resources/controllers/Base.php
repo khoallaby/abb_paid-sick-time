@@ -7,6 +7,7 @@ use WP_Query, WP_User_Query;
 
 class Base {
     private static $instance = array();
+    public static $capability;
 
 	protected function __construct() {
 	}
@@ -224,7 +225,7 @@ class Base {
 
     public static function getView( $file, $return = false ) {
         # todo: pull from get_template_part()
-        $dir = dirname(__FILE__) . '/../../views/';
+        $dir = dirname(__FILE__) . '/../views/';
         if( $return )
             ob_start();
         include $dir . $file . '.php';
@@ -236,6 +237,16 @@ class Base {
 
     }
 
+
+    /**
+     * Generic getView() function that runs common functions like checking for capability access
+     * @param string $view  File name of the view w/o .php
+     */
+    public function getMenuView( $view ) {
+        if ( !current_user_can( static::$capability ) )
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        static::getView( $view );
+    }
 
 
 
