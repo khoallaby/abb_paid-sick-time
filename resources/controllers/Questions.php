@@ -2,18 +2,38 @@
 namespace ABetterBalance\Plugin;
 
 class Questions extends Base {
+    public static $capability = 'edit_theme_options';
+    public static $metaField = '_questions';
 
 
     public function init() {
         parent::init();
 
-        add_action( 'admin_init', [ $this, 'addRepeatableMetaBoxes'], 2 );
-        add_action( 'save_post', [ $this, 'saveRepeatableMetaBoxes'] );
+        add_action( 'admin_init', [ $this, 'addRepeatableMetaBoxes' ], 2 );
+        add_action( 'save_post', [ $this, 'saveRepeatableMetaBoxes' ] );
+        add_action( 'admin_menu', [ $this, 'addSubmenu' ] );
 
     }
 
 
 
+    public function addSubmenu() {
+        # $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function = '' ) {
+        add_submenu_page(
+            'edit.php?post_type=' . PaidSickTime::$cptName,
+            __( PaidSickTime::$cptFullName . ' Questions' ),
+            __( 'Questions' ),
+            static::$capability,
+            'questions',
+            [ $this, 'submenuPage' ]
+        );
+    }
+
+
+
+    public function submenuPage() {
+        echo 'questions page';
+    }
 
 
 
