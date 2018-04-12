@@ -3,7 +3,9 @@ namespace ABetterBalance\Plugin;
 
 class Questions extends Base {
     public static $capability = 'edit_theme_options';
-    public static $metaField = '_questions';
+    public static $optionName = 'pst-questions';
+    public static $metaName   = '_questions';
+    public static $nonce      = 'pst-questions-nonce';
 
 
     public function init() {
@@ -16,7 +18,9 @@ class Questions extends Base {
     }
 
 
-
+    /**
+     * Adds a submenu link 'Questions' under the CPT menu
+     */
     public function addSubmenu() {
         # $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function = '' ) {
         add_submenu_page(
@@ -30,12 +34,20 @@ class Questions extends Base {
     }
 
 
-
+    /**
+     * Pulls the view for the questions submenu page
+     */
     public function submenuPage() {
         static::getMenuView( 'questions/settings' );
     }
 
 
+    /**
+     * Saves the questions on the questions submenu page
+     */
+    public function saveQuestionsPage() {
+
+    }
 
     /**
      * Add repeatable meta boxes
@@ -57,7 +69,7 @@ class Questions extends Base {
 
     public function displayRepeatableMetaBoxes() {
         global $post;
-        $gpminvoice_group = get_post_meta($post->ID, 'customdata_group', true);
+        $questions = get_post_meta($post->ID, 'pst-questions', true);
         wp_nonce_field( 'pst_repeatable_meta_box_nonce', 'pst_repeatable_meta_box_nonce' );
         ?>
         <script type="text/javascript">
@@ -78,8 +90,8 @@ class Questions extends Base {
         <table id="repeatable-fieldset-one" width="100%">
             <tbody>
             <?php
-            if ( $gpminvoice_group ) :
-                foreach ( $gpminvoice_group as $field ) {
+            if ( $questions ) :
+                foreach ( $questions as $field ) {
                     ?>
                     <tr>
                         <td width="15%">
@@ -133,7 +145,7 @@ class Questions extends Base {
         if(!current_user_can('edit_post', $post_id))
             return;
 
-        $old          = get_post_meta( $post_id, 'customdata_group', true );
+        $old          = get_post_meta( $post_id, 'pst-questions', true );
         $new          = array();
         $invoiceItems = $_POST['TitleItem'];
         $prices       = $_POST['TitleDescription'];
@@ -146,9 +158,9 @@ class Questions extends Base {
             endif;
         }
         if( !empty( $new ) && $new != $old ) {
-            update_post_meta( $post_id, 'customdata_group', $new );
+            update_post_meta( $post_id, 'pst-questions', $new );
         } elseif( empty( $new ) && $old ) {
-            delete_post_meta( $post_id, 'customdata_group', $old );
+            delete_post_meta( $post_id, 'pst-questions', $old );
         }
 
 
