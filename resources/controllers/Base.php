@@ -224,11 +224,20 @@ class Base {
 
 
     public static function getView( $file, $return = false ) {
-        # todo: pull from get_template_part()
-        $dir = dirname(__FILE__) . '/../views/';
+        $dirPlugin = dirname(__FILE__) . '/../views/';
+        $dirtheme = 'views/';
+        $fileName = $file . '.php';
+
+        if( $theme_file = locate_template([ $dirtheme . $fileName ]) )
+            $template = $theme_file;
+        else
+            $template = $dirPlugin . $fileName;
+
+
         if( $return )
             ob_start();
-        include $dir . $file . '.php';
+
+        include $template;
 
         if( $return )
             return ob_get_clean();
