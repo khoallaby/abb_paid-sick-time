@@ -4,12 +4,10 @@ namespace ABetterBalance\Plugin;
 global $post;
 
 $questions = get_option( PaidSickTime::$questionsOptionName );
-#$answers = Answers::getAnswers( $post->ID );
-$answers = get_post_meta( $post->ID, PaidSickTime::$answersMetaName, true );
+$answers = Answers::getAnswers( $post->ID );
 ?>
 
 <div class="wrap">
-    <form name="form1" method="post" action="">
         <table id="repeatable-fieldset-one" width="100%">
             <tbody>
             <?php foreach ( (array) $questions as $k => $question ) : ?>
@@ -28,6 +26,4 @@ $answers = get_post_meta( $post->ID, PaidSickTime::$answersMetaName, true );
             <?php wp_nonce_field( PaidSickTime::$nonce, PaidSickTime::$nonce ); ?>
             <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
         </p>
-
-    </form>
 </div>

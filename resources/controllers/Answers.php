@@ -49,10 +49,10 @@ class Answers extends PaidSickTime {
      * Generic function for saving answers
      * @param array $answers
      */
-    public static function saveAnswers( $answers = [], $postId = null ) {
+    public static function saveAnswers( $answers = [], $postID = null ) {
         global $post;
-        if( !$postId )
-            $postId = $post->ID;
+        if( !$postID )
+            $postID = $post->ID;
 
         if( !$answers || empty($answers) )
             return;
@@ -76,27 +76,26 @@ class Answers extends PaidSickTime {
         # removes empty elements
         $answers = array_filter( $answers, function($value) { return $value !== ''; } );
 
-        $update = update_post_meta( $postId, static::$answersMetaName, $answers );
-
-        ## output an admin notice
-        if( $update ) {
-            add_action( 'admin_notices', function() use($update) {
-                if( $update ) {
-                    $message = 'Saved successfully!';
-                    $messageClass = 'updated fade';
-                } else {
-                    $message = 'Something went wrong..';
-                    $messageClass = 'error';
-                }
-
-                echo '<div class="' . $messageClass . '"><p><strong>' . __( $message ) . '</strong></p></div>';
-            } );
-        }
+        $update = update_post_meta( $postID, static::$answersMetaName, $answers );
 
     }
 
 
+    /**
+     * Get the answers from $postID
+     * @param null $postID
+     *
+     * @return array $answers
+     */
+    public static function getAnswers( $postID = null ) {
+        global $post;
+        if( !$postID )
+            $postID = $post->ID;
 
+        $answers = get_post_meta( $postID, PaidSickTime::$answersMetaName, true );
+
+        return $answers;
+    }
 
 
 }
