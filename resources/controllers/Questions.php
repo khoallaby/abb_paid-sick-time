@@ -53,7 +53,7 @@ class Questions extends Base {
      * Saves the questions on the questions submenu page
      */
     public static function saveQuestionsPage() {
-        if( isset($_POST['questions']) )
+        if( isset($_POST['questions']) && isset($_POST[ static::$nonce ]) )
             self::saveQuestions( $_POST['questions'] );
     }
 
