@@ -7,7 +7,7 @@ use WP_Query, WP_User_Query;
 
 class Base {
     private static $instance = array();
-    public static $capability;
+    public static $capability, $dirAssets;
 
 	protected function __construct() {
 	}
@@ -23,9 +23,18 @@ class Base {
 	}
 
 	public function init() {
+	    self::$dirAssets = dirname(__FILE__) . '/../../assets/';
+
 		//require_once dirname(__FILE__) . '/../../vendor/autoload.php';
         #add_filter( 'posts_where', array( $this, 'posts_where' ), 10, 2 );
         #add_action( '_admin_menu', [ $this, 'admin_init' ], 2 );
+
+        if( is_admin() ) {
+            add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueScripts' ] );
+        } else {
+            #add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 100 );
+            #add_action( 'gform_enqueue_scripts', array( $this, 'remove_gravityforms_css' ) );
+        }
 
     }
 
@@ -41,9 +50,38 @@ class Base {
      * Actions/filters
      ******************************************************************************************/
 
+
+    // Enqueues styles/scripts on admin
+    public function adminEnqueueScripts() {
+        wp_enqueue_style( 'abb-pst-style', abb_pst_plugin_url . 'assets/css/style.css' );
+    }
+
+    // Enqueues styles/scripts on frontend
+    public function enqueueScripts() {
+        /*
+        // wp_enqueue_style( 'parent', get_template_directory_uri() . '/style.css' );
+        wp_enqueue_style( 'child-style',
+            get_stylesheet_directory_uri() . '/assets/css/style.css',
+            array( 'parent' ),
+            wp_get_theme()->get( 'Version' )
+        );
+        */
+    }
+
+
     // do stuff on admin
     public function admin_init() {
         #require_once( dirname(__FILE__) . '/AdminUi.php');
+    }
+
+
+
+    // disable gravity forms css
+    function remove_gravityforms_css() {
+        wp_deregister_style( 'gforms_formsmain_css' );
+        wp_deregister_style( 'gforms_reset_css' );
+        wp_deregister_style( 'gforms_ready_class_css' );
+        wp_deregister_style( 'gforms_browsers_css' );
     }
 
 
