@@ -1,33 +1,26 @@
 <?php
 namespace ABetterBalance\Plugin;
 
-class Answers extends Questions {
-    public static $capability = 'edit_theme_options';
-    public static $optionName = 'pst_questions';
-    public static $metaName   = '_questions';
-    public static $nonce      = 'pst-questions-nonce';
-
+class Answers extends PaidSickTime {
 
     public function init() {
-
         add_action( 'admin_init', [ $this, 'addMetaBoxes' ], 2 );
-        add_action( 'save_post', [ $this, 'saveRepeatableMetaBoxes' ] );
-
+        add_action( 'save_post', [ $this, 'saveAnswersPage' ] );
     }
 
 
     /**
-     * Adds the meta boxes to single PSTL's
+     * Adds the meta boxes to edit PSTL
      */
     public function addMetaBoxes() {
         add_meta_box(
-            'gpminvoice-group',
-            'Questions',
+            'answers-metaboxes',
+            'Questions & Answers',
             [
                 $this,
                 'displayMetaBoxes'
             ],
-            PaidSickTime::$cptName,
+            static::$cptName,
             'normal',
             'default'
         );
@@ -42,13 +35,25 @@ class Answers extends Questions {
     }
 
 
+    /**
+     * Saves the answers on the edit PSTL page
+     */
+    public static function saveAnswersPage() {
+        if( isset($_POST['answers']) && isset($_POST[ static::$nonce ]) )
+            self::saveAnswers( $_POST['answers'] );
+    }
+
 
 
     /**
      * Generic function for saving answers
      * @param array $answers
      */
-    public static function saveQuestions( $answers = [] ) {
+    public static function saveAnswers( $answers = [], $postId = null ) {
+        global $post;
+        if( !$postId )
+            $postId = $post->ID;
+
         if( !$answers || empty($answers) )
             return;
 
@@ -71,7 +76,7 @@ class Answers extends Questions {
         # removes empty elements
         $answers = array_filter( $answers, function($value) { return $value !== ''; } );
 
-        $update = update_option( Questions::$optionName, $answers );
+        $update = update_post_meta( $postId, static::$answersMetaName, $answers );
 
         ## output an admin notice
         if( $update ) {
