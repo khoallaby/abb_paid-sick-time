@@ -47,17 +47,30 @@ class Questions extends Base {
     public function submenuPage() {
         static::getMenuView( 'questions/settings' );
     }
-
-
+    
+    
     /**
      * Saves the questions on the questions submenu page
      */
-    public static function saveQuestionsPage( $questions = [] ) {
+    public static function saveQuestionsPage() {
+        if( isset($_POST['questions']) )
+            self::saveQuestions( $_POST['questions'] );
+    }
 
-        if( empty(!$questions) )
-            $questions = $_POST['questions'];
 
-        if( empty(!$questions) ||
+    /**
+     * Generic function for saving questions
+     * @param array $questions
+     */
+    public static function saveQuestions( $questions = [] ) {
+        if( !$questions || empty($questions) ) {
+            if( isset($_POST['questions']) )
+                $questions = $_POST['questions'];
+            else
+                return;
+        }
+
+        if( empty($questions) ||
             !isset( $_POST[ static::$nonce ] ) ||
             !wp_verify_nonce( $_POST[ static::$nonce ], static::$nonce ) )
             return;
@@ -66,10 +79,11 @@ class Questions extends Base {
         if( !current_user_can( static::$capability) )
             return;
 
-
         # sanitize input
-        $questions = array_map( 'sanitize_textarea_field', $_POST['questions'] );
-        # removes empty
+        $questions = stripslashes_deep( $questions );
+        $questions = array_map( 'sanitize_textarea_field', $questions );
+
+        # removes empty elements
         $questions = array_filter( $questions, function($value) { return $value !== ''; } );
 
         $update = update_option( Questions::$optionName, $questions );

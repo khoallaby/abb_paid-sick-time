@@ -30,15 +30,14 @@ $questions = get_option( Questions::$optionName );
             <?php
             if ( $questions ) :
                 foreach ( $questions as $field ) {
-                    #Questions::getView('questions/settings-single-textarea');
-                    ?>
-                    <tr>
-                        <td>
-                            <textarea placeholder="" rows="5" name="questions[]" style="width: 100%;"><?php echo !empty($field) ? esc_attr( $field ) : ''; ?></textarea>
-                        </td>
-                        <td><a class="button remove-row" href="#">Remove</a></td>
-                    </tr>
-                    <?php
+                ?>
+                <tr>
+                    <td>
+                        <textarea placeholder="" rows="5" name="questions[]" style="width: 100%;"><?php echo !empty($field) ? esc_attr( $field ) : ''; ?></textarea>
+                    </td>
+                    <td><a class="button remove-row" href="#">Remove</a></td>
+                </tr>
+                <?php
                 }
             else :
                 // show a blank one
