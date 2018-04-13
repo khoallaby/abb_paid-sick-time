@@ -57,26 +57,16 @@ class Answers extends PaidSickTime {
         if( !$answers || empty($answers) )
             return;
 
-        if( empty($answers) ||
-            !isset( $_POST[ static::$nonce ] ) ||
-            !wp_verify_nonce( $_POST[ static::$nonce ], static::$nonce ) )
-            return;
-
-
         if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
             return;
 
-        if( !current_user_can( static::$capability) )
+        if( !static::canUpdateData() )
             return;
 
-        # sanitize input
-        $answers = stripslashes_deep( $answers );
-        $answers = array_map( 'sanitize_textarea_field', $answers );
-
-        # removes empty elements
-        $answers = array_filter( $answers, function($value) { return $value !== ''; } );
-
+        $answers = static::sanitizeData( $answers );
         $update = update_post_meta( $postID, static::$answersMetaName, $answers );
+
+        static::printAdminNotices( $update );
 
     }
 

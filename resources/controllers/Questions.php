@@ -58,38 +58,14 @@ class Questions extends PaidSickTime {
                 return;
         }
 
-        if( empty($questions) ||
-            !isset( $_POST[ static::$nonce ] ) ||
-            !wp_verify_nonce( $_POST[ static::$nonce ], static::$nonce ) )
+
+        if( !static::canUpdateData() )
             return;
 
-
-        if( !current_user_can( static::$capability) )
-            return;
-
-        # sanitize input
-        $questions = stripslashes_deep( $questions );
-        $questions = array_map( 'sanitize_textarea_field', $questions );
-
-        # removes empty elements
-        $questions = array_filter( $questions, function($value) { return $value !== ''; } );
-
+        $questions = static::sanitizeData( $questions );
         $update = update_option( static::$questionsOptionName, $questions );
 
-        ## output an admin notice
-        if( $update ) {
-            add_action( 'admin_notices', function() use($update) {
-                if( $update ) {
-                    $message = 'Saved successfully!';
-                    $messageClass = 'updated fade';
-                } else {
-                    $message = 'Something went wrong..';
-                    $messageClass = 'error';
-                }
-
-                echo '<div class="' . $messageClass . '"><p><strong>' . __( $message ) . '</strong></p></div>';
-            } );
-        }
+        static::printAdminNotices( $update );
 
     }
 
