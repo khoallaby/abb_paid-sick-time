@@ -1,19 +1,11 @@
 <?php
 namespace ABetterBalance\Plugin;
 
-class Questions extends Base {
-    public static $capability = 'edit_theme_options';
-    public static $optionName = 'pst_questions';
-    public static $metaName   = '_questions';
-    public static $nonce      = 'pst-questions-nonce';
+class Questions extends PaidSickTime {
 
 
     public function init() {
-
-        #add_action( 'admin_init', [ $this, 'addRepeatableMetaBoxes' ], 2 );
-        #add_action( 'save_post', [ $this, 'saveRepeatableMetaBoxes' ] );
         add_action( 'admin_menu', [ $this, 'addSubmenu' ] );
-
     }
 
 
@@ -82,7 +74,7 @@ class Questions extends Base {
         # removes empty elements
         $questions = array_filter( $questions, function($value) { return $value !== ''; } );
 
-        $update = update_option( Questions::$optionName, $questions );
+        $update = update_option( static::$questionsOptionName, $questions );
 
         ## output an admin notice
         if( $update ) {

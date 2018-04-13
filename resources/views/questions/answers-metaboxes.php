@@ -3,9 +3,9 @@ namespace ABetterBalance\Plugin;
 
 global $post;
 
-$questions = get_option( Questions::$optionName );
+$questions = get_option( PaidSickTime::$questionsOptionName );
 #$answers = Answers::getAnswers( $post->ID );
-$answers = [ 'answer 1', 'answer 2' ];
+$answers = get_post_meta( $post->ID, PaidSickTime::$answersMetaName, true );
 ?>
 
 <div class="wrap">
@@ -16,7 +16,7 @@ $answers = [ 'answer 1', 'answer 2' ];
                 <tr>
                     <td width="25%"><?php echo $question; ?></td>
                     <td width="75%">
-                        <textarea placeholder="" rows="5" name="answers[]" style="width: 100%;"><?php echo !empty($answers[$k]) ? esc_attr( $answers[$k] ) : ''; ?></textarea>
+                        <textarea placeholder="" rows="5" name="answers[]" style="width: 100%;"><?php echo !empty($answers[$k]) ? sanitize_textarea_field( $answers[$k] ) : ''; ?></textarea>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -25,7 +25,7 @@ $answers = [ 'answer 1', 'answer 2' ];
 
 
         <p>
-            <?php wp_nonce_field( Questions::$nonce, Questions::$nonce ); ?>
+            <?php wp_nonce_field( PaidSickTime::$nonce, PaidSickTime::$nonce ); ?>
             <input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
         </p>
 

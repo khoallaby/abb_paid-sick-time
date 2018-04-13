@@ -8,8 +8,13 @@ namespace ABetterBalance\Plugin;
  */
 class PaidSickTime extends CustomPostTypes {
 
-    public static $cptFullName = 'Paid sick time law';
     public static $cptName;
+    public static $cptFullName          = 'Paid sick time law';
+    public static $nonce                = 'pst-questions-nonce';
+    public static $capability           = 'edit_theme_options';
+    public static $answersMetaName      = '_answers';
+    public static $questionsMetaName    = '_questions';
+    public static $questionsOptionName  = 'pst_questions';
 
     public function init() {
         self::$cptName = parent::uncleanName( static::$cptFullName );
