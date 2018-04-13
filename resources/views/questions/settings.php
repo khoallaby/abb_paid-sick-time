@@ -25,6 +25,7 @@ $questions = get_option( Questions::$optionName );
     <form name="form1" method="post" action="">
         <h1><?php echo __( 'Questions' ); ?></h1>
 
+        <p><a id="add-row" class="button" href="#">Add another</a></p>
         <table id="repeatable-fieldset-one" width="100%">
             <tbody>
             <?php
@@ -59,7 +60,6 @@ $questions = get_option( Questions::$optionName );
             </tr>
             </tbody>
         </table>
-        <p><a id="add-row" class="button" href="#">Add another</a></p>
 
 
         <p class="submit">
