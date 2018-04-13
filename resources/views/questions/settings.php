@@ -7,7 +7,7 @@ $questions = get_option( PaidSickTime::$questionsOptionName );
 
 <script type="text/javascript">
     jQuery(document).ready(function( $ ){
-        $( '#add-row' ).on('click', function() {
+        $( '.add-row' ).on('click', function() {
             var row = $( '.empty-row.screen-reader-text' ).clone(true);
             row.removeClass( 'empty-row screen-reader-text' );
             row.insertBefore( '#repeatable-fieldset-one tbody>tr:last' );
@@ -25,7 +25,7 @@ $questions = get_option( PaidSickTime::$questionsOptionName );
     <form name="form1" method="post" action="">
         <h1><?php echo __( 'Questions' ); ?></h1>
 
-        <p><a id="add-row" class="button" href="#">Add another</a></p>
+        <p><a class="add-row button" href="#">Add another</a></p>
         <table id="repeatable-fieldset-one" width="100%">
             <tbody>
             <?php
@@ -60,6 +60,7 @@ $questions = get_option( PaidSickTime::$questionsOptionName );
             </tr>
             </tbody>
         </table>
+        <p><a class="add-row button" href="#">Add another</a></p>
 
 
         <p class="submit">
