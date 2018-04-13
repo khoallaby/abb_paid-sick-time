@@ -15,8 +15,8 @@ class Questions extends PaidSickTime {
     public function addSubmenu() {
         $menuSlug = 'questions';
         $hook = add_submenu_page(
-            'edit.php?post_type=' . PaidSickTime::$cptName,
-            __( PaidSickTime::$cptFullName . ' Questions' ),
+            'edit.php?post_type=' . static::$cptName,
+            __( static::$cptFullName . ' Questions' ),
             __( 'Questions' ),
             static::$capability,
             $menuSlug,
