@@ -18,7 +18,9 @@ class PaidSickTime extends CustomPostTypes {
 
     public function init() {
         self::$cptName = parent::uncleanName( static::$cptFullName );
+
         add_action( 'init', [ $this, 'registerAll' ]);
+        add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 100 );
     }
 
 
@@ -29,6 +31,16 @@ class PaidSickTime extends CustomPostTypes {
             'taxonomies'          => [ 'category' ],
         ] );
     }
+
+
+
+
+    // Enqueues styles/scripts on frontend
+    public function enqueueScripts() {
+        if( is_post_type_archive(PaidSickTime::$cptName) || is_singular(PaidSickTime::$cptName) )
+            wp_enqueue_style( 'abb-pst-style', abb_pst_plugin_url . 'assets/css/style.css' );
+    }
+
 
 
     /**

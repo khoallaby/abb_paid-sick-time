@@ -32,6 +32,7 @@ class Base {
         if( is_admin() ) {
             add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueScripts' ] );
         } else {
+            #if( is_post_type_archive(PaidSickTime::$cptName) )
             #add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 100 );
             #add_action( 'gform_enqueue_scripts', array( $this, 'remove_gravityforms_css' ) );
         }
@@ -53,7 +54,7 @@ class Base {
 
     // Enqueues styles/scripts on admin
     public function adminEnqueueScripts() {
-        wp_enqueue_style( 'abb-pst-style', abb_pst_plugin_url . 'assets/css/style.css' );
+        wp_enqueue_style( 'abb-pst-style-admin', abb_pst_plugin_url . 'assets/css/style-admin.css' );
     }
 
     // Enqueues styles/scripts on frontend
