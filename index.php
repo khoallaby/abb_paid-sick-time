@@ -18,6 +18,7 @@ require_once( dirname(__FILE__) . '/resources/controllers/Base.php');
 require_once( dirname(__FILE__) . '/resources/controllers/CustomPostTypes.php');
 require_once( dirname(__FILE__) . '/resources/controllers/PaidSickTime.php');
 require_once( dirname(__FILE__) . '/resources/controllers/Questions.php');
+require_once( dirname(__FILE__) . '/resources/controllers/Answers.php');
 
 
 function vard($s) {
