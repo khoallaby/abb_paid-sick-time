@@ -24,21 +24,34 @@ $PSTs = PaidSickTime::getPSTs( $args );
 <p><strong>Note: You must check at least one box under Issues and at least one box under location.</strong></p>
 
 
-
-
-<table class="pstl-table">
-    <thead>
-        <tr>
-            <td></td>
-            <?php
-            $pstAnswers = [];
-            foreach( $PSTs as $k => $pst ) {
-                $answers = $pstAnswers[ $k ] = Answers::getAnswers( $pst->ID );
-                echo "<td>$pst->post_title</td>\n";
-            }
-            ?>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+<div class="pstl-table-container">
+    <table class="pstl-table">
+        <thead>
+            <tr>
+                <td></td>
+                <?php
+                $pstAnswers = [];
+                foreach( $PSTs as $k => $pst ) {
+                    $pstAnswers[ $pst->ID ] = Answers::getAnswers( $pst->ID );
+                    echo "<td>$pst->post_title</td>\n";
+                }
+                ?>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach( $questions as $questionID => $question ) { ?>
+            <tr class="question-<?php echo $questionID; ?>">
+                <td><?php echo $question; ?></td>
+                <?php
+                foreach( $PSTs as $k => $pst ) :
+                    echo sprintf( '<td class="answer-%d">%s</td>' . "\n",
+                        $questionID,
+                        isset($pstAnswers[$pst->ID][ $questionID ]) ? $pstAnswers[$pst->ID][ $questionID ] : ''
+                    );
+                endforeach;
+                ?>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+</div>

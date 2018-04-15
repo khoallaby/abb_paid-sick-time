@@ -5,8 +5,10 @@
   }
 }
 
-.pstl-table {
+.pstl-table-container {
   overflow-x: auto;
+}
+.pstl-table {
   tr td {
     border: 1px solid black;
     min-width: 200px;
