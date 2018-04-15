@@ -28,7 +28,8 @@
 
 .pstl-table tr td {
   border: 1px solid black;
-  min-width: 200px;
+  min-width: 300px;
+  padding: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */
