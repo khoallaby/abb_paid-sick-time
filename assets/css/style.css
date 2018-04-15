@@ -1,6 +1,25 @@
+.flex-row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.col-1-2 {
+  padding: 10px;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .col-1-2 {
+    -ms-flex: 50%;
+        flex: 50%;
+    max-width: 50%;
+  }
+}
+
 .pstl-search ul {
   list-style-type: none;
 }
-
 
 /*# sourceMappingURL=style.css.map */

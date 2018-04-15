@@ -1,0 +1,16 @@
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-1-2 {
+  padding: 10px;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .col-1-2 {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
