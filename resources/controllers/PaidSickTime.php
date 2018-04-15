@@ -51,55 +51,66 @@ class PaidSickTime extends CustomPostTypes {
 
     /**
      * Gets all the PST posts
-     * @param bool $parseSeperately - If set to true, parses all the posts into their seperate locations, i.e. city/county/state
+     * @param array $args   Args for wp_query
      *
-     * @return array|\WP_Query
+     * @return \WP_Query
      */
-    public static function getPSTs( $parseSeperately = false ) {
+    public static function getPSTs( $args = [] ) {
+        $defaults = [
+            #'order'   => 'DESC',
+            #'orderby' => 'display_name',
+        ];
+        $args = wp_parse_args( $args, $defaults );
 
-        $posts = self::getQuery( self::$cptName, [
 
-        ] );
+        $posts = self::getQuery( self::$cptName, $args );
 
-        if( $parseSeperately ) :
-            $postsOrdered = []; // an array divided by the locations.
-            $locationSlugs = [];
-            $californiaID = 0;
+        return $posts;
+    }
 
-            // get postID of california
-            foreach( $posts->posts as $post ) {
-                if( strtolower($post->post_title) == 'california' )
-                    $californiaID = $post->ID;
-            }
 
-            // get all the locations (state/county/city)
-            foreach( get_terms(Locations::$taxName) as $location ) {
-                $locationSlugs[ $location->term_id ] = $location->slug;
-                $postsOrdered[ $location->slug ] = []; // spawn empty array so no errors later for a non existent array
-            }
+    /**
+     * Gets all the PST posts and parses all the posts into their separate locations, i.e. city/county/state
+     * @param array $args   Args for wp_query
+     *
+     * @return array
+     */
+    public static function getPSTsByLocation( $args = [] ) {
+        $posts = self::getPSTS( $args );
+        $postsOrdered = []; // an array divided by the locations.
+        $locationSlugs = [];
+        $californiaID = 0;
 
-            // loop through and generate the multi dimensional array ($postsOrdered), divided by locations
-            foreach( $posts->posts as $post ) :
-                $locations = get_the_terms( $post->ID, 'location' );
-                if( !empty($locations) ) {
-                    foreach( $locations as $location ) {
-                        $postsOrdered[$location->slug][] = $post;
+        // get postID of california
+        foreach( $posts->posts as $post ) {
+            if( strtolower($post->post_title) == 'california' )
+                $californiaID = $post->ID;
+        }
 
-                        // logic for getting cali city/counties
-                        if( $post->post_parent == $californiaID )
-                            $postsOrdered['cali'][] = $post;
-                        // else, is it a city or county (not state), and its not in cali?
-                        elseif( in_array($location->slug, ['city', 'county']) )
-                            $postsOrdered['non-cali'][] = $post;
-                    }
+        // get all the locations (state/county/city)
+        foreach( get_terms(Locations::$taxName) as $location ) {
+            $locationSlugs[ $location->term_id ] = $location->slug;
+            $postsOrdered[ $location->slug ] = []; // spawn empty array so no errors later for a non existent array
+        }
+
+        // loop through and generate the multi dimensional array ($postsOrdered), divided by locations
+        foreach( $posts->posts as $post ) :
+            $locations = get_the_terms( $post->ID, 'location' );
+            if( !empty($locations) ) {
+                foreach( $locations as $location ) {
+                    $postsOrdered[$location->slug][] = $post;
+
+                    // logic for getting cali city/counties
+                    if( $post->post_parent == $californiaID )
+                        $postsOrdered['cali'][] = $post;
+                    // else, is it a city or county (not state), and its not in cali?
+                    elseif( in_array($location->slug, ['city', 'county']) )
+                        $postsOrdered['non-cali'][] = $post;
                 }
+            }
 
-            endforeach;
-            return $postsOrdered;
-
-        else :
-            return $posts;
-        endif;
+        endforeach;
+        return $postsOrdered;
 
     }
 

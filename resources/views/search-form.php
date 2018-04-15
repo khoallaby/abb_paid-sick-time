@@ -3,7 +3,7 @@ namespace ABetterBalance\Plugin;
 global $post;
 
 $questions = get_option( PaidSickTime::$questionsOptionName );
-$PSTs = PaidSickTime::getPSTs( true );
+$PSTs = PaidSickTime::getPSTsByLocation();
 ?>
 
 <h2>Overview of Paid Sick Time Laws in the United States:<br />Custom Filtering</h2>
