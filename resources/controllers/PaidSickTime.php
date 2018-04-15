@@ -28,7 +28,7 @@ class PaidSickTime extends CustomPostTypes {
         $this->registerCpt( static::$cptFullName, static::$cptFullName . 's', [
             'exclude_from_search' => true,
             'supports'            => [ 'title', 'editor', 'page-attributes', 'custom-fields', /*'thumbnail'*/ ],
-            'taxonomies'          => [ 'category' ],
+            'taxonomies'          => [ Locations::$taxName ],
         ] );
     }
 

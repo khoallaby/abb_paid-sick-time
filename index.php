@@ -19,6 +19,7 @@ require_once( dirname(__FILE__) . '/resources/controllers/Shortcodes.php');
 
 require_once( dirname(__FILE__) . '/resources/controllers/CustomPostTypes.php');
 require_once( dirname(__FILE__) . '/resources/controllers/PaidSickTime.php');
+require_once( dirname(__FILE__) . '/resources/controllers/Locations.php');
 require_once( dirname(__FILE__) . '/resources/controllers/Answers.php');
 require_once( dirname(__FILE__) . '/resources/controllers/Questions.php');
 require_once( dirname(__FILE__) . '/resources/controllers/Search.php');
