@@ -65,7 +65,7 @@ class PaidSickTime extends CustomPostTypes {
 
         $posts = self::getQuery( self::$cptName, $args );
 
-        return $posts;
+        return $posts->posts;
     }
 
 
@@ -94,7 +94,7 @@ class PaidSickTime extends CustomPostTypes {
         }
 
         // loop through and generate the multi dimensional array ($postsOrdered), divided by locations
-        foreach( $posts->posts as $post ) :
+        foreach( $posts as $post ) :
             $locations = get_the_terms( $post->ID, 'location' );
             if( !empty($locations) ) {
                 foreach( $locations as $location ) {

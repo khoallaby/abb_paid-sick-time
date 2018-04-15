@@ -2,10 +2,14 @@
 namespace ABetterBalance\Plugin;
 global $post;
 
+// @todo: select only questions (from $_POST) with correct $key in array
 $questions = get_option( PaidSickTime::$questionsOptionName );
-#$answers = Answers::getAnswers( $post->ID );
-$locations = []; #Locations:getLocations();
-$PSTs = PaidSickTime::getPSTs( true );
+$args = [];
+
+if( isset($_REQUEST['locations']) && !empty($_REQUEST['locations']) )
+    $args['post__in'] = $_REQUEST['locations'];
+
+$PSTs = PaidSickTime::getPSTs( $args );
 
 ?>
 <h2>Overview of Paid Sick Time Laws in the United States:<br />Comparison Results</h2>
@@ -23,4 +27,18 @@ $PSTs = PaidSickTime::getPSTs( true );
 
 
 <table class="pstl-table">
+    <thead>
+        <tr>
+            <td></td>
+            <?php
+            $pstAnswers = [];
+            foreach( $PSTs as $k => $pst ) {
+                $answers = $pstAnswers[ $k ] = Answers::getAnswers( $pst->ID );
+                echo "<td>$pst->post_title</td>\n";
+            }
+            ?>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
 </table>
