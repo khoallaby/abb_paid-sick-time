@@ -34,7 +34,14 @@ $PSTs = PaidSickTime::getPSTs( true );
     <div class="col-1-2 locations-container">
         <h3>Locations</h3>
         <?php
-        $locations = [  'state' => 'States', 'city' => 'Cities', 'county' => 'Counties' ];
+        $locations = [
+            'state' => 'States',
+            #'city' => 'Cities',
+            #'county' => 'Counties'
+            'cali' => 'California Cities',
+            'non-cali' => 'Other Counties & Cities (Outside California)'
+        ];
+
         foreach( $locations as $slug => $title ) {
             ?>
             <div class="location-<?php echo $slug; ?>">

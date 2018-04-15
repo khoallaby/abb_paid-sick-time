@@ -64,6 +64,13 @@ class PaidSickTime extends CustomPostTypes {
         if( $parseSeperately ) :
             $postsOrdered = []; // an array divided by the locations.
             $locationSlugs = [];
+            $californiaID = 0;
+
+            // get postID of california
+            foreach( $posts->posts as $post ) {
+                if( strtolower($post->post_title) == 'california' )
+                    $californiaID = $post->ID;
+            }
 
             // get all the locations (state/county/city)
             foreach( get_terms(Locations::$taxName) as $location ) {
@@ -75,8 +82,16 @@ class PaidSickTime extends CustomPostTypes {
             foreach( $posts->posts as $post ) :
                 $locations = get_the_terms( $post->ID, 'location' );
                 if( !empty($locations) ) {
-                    foreach( $locations as $location )
+                    foreach( $locations as $location ) {
                         $postsOrdered[$location->slug][] = $post;
+
+                        // logic for getting cali city/counties
+                        if( $post->post_parent == $californiaID )
+                            $postsOrdered['cali'][] = $post;
+                        // else, is it a city or county (not state), and its not in cali?
+                        elseif( in_array($location->slug, ['city', 'county']) )
+                            $postsOrdered['non-cali'][] = $post;
+                    }
                 }
 
             endforeach;
