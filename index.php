@@ -12,6 +12,7 @@
 
 define( 'abb_pst_plugin_url', plugin_dir_url(__FILE__ ) );
 define( 'abb_pst_plugin_path', plugin_dir_path(__FILE__ ) );
+define( 'abb_pst_plugin_version', '1.0.0' );
 
 # todo: build importer pls
 require_once( dirname(__FILE__) . '/resources/controllers/Base.php');

@@ -29,6 +29,7 @@ class Base {
         #add_filter( 'posts_where', array( $this, 'posts_where' ), 10, 2 );
         #add_action( '_admin_menu', [ $this, 'admin_init' ], 2 );
 
+        add_action( 'init', [ $this, 'registerScripts' ] );
         if( is_admin() ) {
             add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueScripts' ] );
         } else {
@@ -58,7 +59,15 @@ class Base {
     }
 
     // Enqueues styles/scripts on frontend
-    public function enqueueScripts() {
+    public function registerScripts() {
+        wp_register_style( 'abb-pst-style', abb_pst_plugin_url . 'assets/css/style.css' );
+        wp_register_script( 'abb-pst-js',
+            abb_pst_plugin_url . 'assets/js/scripts.js',
+            ['jquery'],
+            abb_pst_plugin_version,
+            true
+        );
+
         /*
         // wp_enqueue_style( 'parent', get_template_directory_uri() . '/style.css' );
         wp_enqueue_style( 'child-style',

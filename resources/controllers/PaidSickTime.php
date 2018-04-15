@@ -37,8 +37,11 @@ class PaidSickTime extends CustomPostTypes {
 
     // Enqueues styles/scripts on frontend
     public function enqueueScripts() {
-        if( is_post_type_archive(self::$cptName) || is_singular(self::$cptName) )
-            wp_enqueue_style( 'abb-pst-style', abb_pst_plugin_url . 'assets/css/style.css' );
+        if( is_post_type_archive(self::$cptName) || is_singular(self::$cptName) ) {
+            wp_enqueue_style( 'abb-pst-style' );
+            wp_enqueue_script( 'abb-pst-js' );
+        }
+
     }
 
 
