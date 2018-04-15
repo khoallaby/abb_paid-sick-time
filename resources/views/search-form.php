@@ -1,6 +1,5 @@
 <?php
 namespace ABetterBalance\Plugin;
-global $post;
 
 $questions = get_option( PaidSickTime::$questionsOptionName );
 $PSTs = PaidSickTime::getPSTsByLocation();
@@ -62,8 +61,6 @@ $PSTs = PaidSickTime::getPSTsByLocation();
                 <?php endif; ?>
             </div>
         <?php } ?>
-
-
     </div>
     <p>
         <input type="submit" class="" value="<?php esc_attr_e('Submit') ?>" />

@@ -85,7 +85,7 @@ class PaidSickTime extends CustomPostTypes {
         $californiaID = 0;
 
         // get postID of california
-        foreach( $posts->posts as $post ) {
+        foreach( $posts as $post ) {
             if( strtolower($post->post_title) == 'california' )
                 $californiaID = $post->ID;
         }
