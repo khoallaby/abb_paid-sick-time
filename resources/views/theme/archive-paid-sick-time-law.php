@@ -22,13 +22,7 @@ $PSTs = PaidSickTime::getPSTsByLocation();
 
 <div class="flex-row">
     <?php
-    $locations = [
-        'state' => 'States',
-        #'city' => 'Cities',
-        #'county' => 'Counties'
-        'cali' => 'California Cities',
-        'non-cali' => 'Other Counties & Cities (Outside California)'
-    ];
+    $locations = Locations::getLocationSlugTitles();
 
     foreach( $locations as $slug => $title ) {
         ?>
@@ -36,20 +30,11 @@ $PSTs = PaidSickTime::getPSTsByLocation();
             <?php if( isset($PSTs[$slug]) ) : ?>
                 <h4><?php echo $title; ?></h4>
                 <ul>
-                    <?php foreach ( $PSTs[$slug] as $location ) : ?>
-                        <li class="location">
-                            <label>
-                                <input type="checkbox" name="locations[]" value="<?php echo $location->ID; ?>" />
-                                <span><?php echo $location->post_title; ?></span>
-                            </label>
-                        </li>
-                    <?php endforeach; ?>
+                <?php foreach ( $PSTs[$slug] as $pst ) : ?>
                     <li class="location">
-                        <label>
-                            <input type="checkbox" class="location-all" />
-                            <span><em>All the above</em></span>
-                        </label>
+                        <?php echo sprintf( '<a href="%s">%s</a>', get_permalink( $pst->ID ), $pst->post_title ); ?>
                     </li>
+                <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
         </div>
