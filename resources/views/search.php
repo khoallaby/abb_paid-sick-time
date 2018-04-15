@@ -33,16 +33,19 @@ $PSTs = PaidSickTime::getPSTs( true );
     </div>
     <div class="col-1-2 locations-container">
         <h3>Locations</h3>
-
-            <div class="location-states">
-                <?php if( isset($PSTs['state']) ) : ?>
-                <h4>States</h4>
+        <?php
+        $locations = [  'state' => 'States', 'city' => 'Cities', 'county' => 'Counties' ];
+        foreach( $locations as $slug => $title ) {
+            ?>
+            <div class="location-<?php echo $slug; ?>">
+                <?php if( isset($PSTs[$slug]) ) : ?>
+                <h4><?php echo $title; ?></h4>
                 <ul>
-                    <?php foreach ( $PSTs['state'] as $state ) : ?>
+                    <?php foreach ( $PSTs[$slug] as $location ) : ?>
                         <li class="location">
                             <label>
-                                <input type="checkbox" name="locations[]" value="<?php echo $state->ID; ?>" />
-                                <span><?php echo $state->post_title; ?></span>
+                                <input type="checkbox" name="locations[]" value="<?php echo $location->ID; ?>" />
+                                <span><?php echo $location->post_title; ?></span>
                             </label>
                         </li>
                     <?php endforeach; ?>
@@ -55,6 +58,7 @@ $PSTs = PaidSickTime::getPSTs( true );
                 </ul>
                 <?php endif; ?>
             </div>
+        <?php } ?>
 
 
     </div>
