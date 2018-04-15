@@ -37,9 +37,79 @@ class PaidSickTime extends CustomPostTypes {
 
     // Enqueues styles/scripts on frontend
     public function enqueueScripts() {
-        if( is_post_type_archive(PaidSickTime::$cptName) || is_singular(PaidSickTime::$cptName) )
+        if( is_post_type_archive(self::$cptName) || is_singular(self::$cptName) )
             wp_enqueue_style( 'abb-pst-style', abb_pst_plugin_url . 'assets/css/style.css' );
     }
+
+
+
+
+    /**************************************************************************************************************
+     * Generic functions for retrieving/modifying the PST posts
+     *************************************************************************************************************/
+
+
+    /**
+     * Gets all the PST posts
+     * @param bool $parseSeperately - If set to true, parses all the posts into their seperate locations, i.e. city/county/state
+     *
+     * @return array|\WP_Query
+     */
+    public static function getPSTs( $parseSeperately = false ) {
+
+        $posts = self::getQuery( self::$cptName, [
+
+        ] );
+
+        if( $parseSeperately ) :
+            $postsOrdered = []; // an array divided by the locations.
+            $locationSlugs = [];
+
+            // get all the locations (state/county/city)
+            foreach( get_terms(Locations::$taxName) as $location ) {
+                $locationSlugs[ $location->term_id ] = $location->slug;
+                $postsOrdered[ $location->slug ] = []; // spawn empty array so no errors later for a non existent array
+            }
+
+            // loop through and generate the multi dimensional array ($postsOrdered), divided by locations
+            foreach( $posts->posts as $post ) :
+                $locations = get_the_terms( $post->ID, 'location' );
+                if( !empty($locations) ) {
+                    foreach( $locations as $location )
+                        $postsOrdered[$location->slug][] = $post;
+                }
+
+            endforeach;
+            return $postsOrdered;
+
+        else :
+            return $posts;
+        endif;
+
+    }
+
+
+
+
+    public static function getPSTsByState( $state ) {
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**************************************************************************************************************
+     * Generic functions for saving/sanitizing custom data
+     *************************************************************************************************************/
 
 
 
