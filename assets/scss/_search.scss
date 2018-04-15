@@ -4,3 +4,11 @@
     list-style-type: none;
   }
 }
+
+.pstl-table {
+  overflow-x: auto;
+  tr td {
+    border: 1px solid black;
+    min-width: 200px;
+  }
+}
