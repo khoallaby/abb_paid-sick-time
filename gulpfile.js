@@ -179,7 +179,7 @@ gulp.task('prod', ['minify-scss', 'scripts'], function() {
 
 });
 
-gulp.task('default', ['sass', 'images', /*'php',*/ 'livereload', 'watch']);
+gulp.task('default', ['sass', 'images', /*'php', 'livereload,'*/ 'watch']);
 
 
 gulp.task('watch', function () {
