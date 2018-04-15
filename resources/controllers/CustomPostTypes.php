@@ -18,15 +18,30 @@ class CustomPostTypes extends Base {
 
 
 	public function registerTaxonomy( $taxName, $taxNamePlural, $postType, $args = [] ) {
+
+        $defaults = [
+            'label' => __( $this::cleanName($taxNamePlural) ),
+            #'public' => false,
+            #'public_queryable' => false,
+            'show_in_menu' => false,
+            'rewrite' => false,
+            'hierarchical' => true,
+            #'query_var' => $taxName,
+            #'show_in_rest' => true,
+            #'rest_base' => '',
+            #'rest_controller_class' => '',
+            #'rewrite' => false,
+            #'public' => false,
+            #'public_queryable' =>false,
+            #'meta_box_cb' => '',
+            #'update_count_cb' => '',
+        ];
+        $args = wp_parse_args( $args, $defaults );
+
 		register_taxonomy(
 			$taxName,
 			$postType,
-			[
-				'label' => __( $this::cleanName($taxNamePlural) ),
-				#'public' => false,
-				'rewrite' => false,
-				'hierarchical' => true,
-            ]
+            $args
 		);
 	}
 
