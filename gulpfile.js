@@ -179,14 +179,14 @@ gulp.task('prod', ['minify-scss', 'scripts'], function() {
 
 });
 
-gulp.task('default', ['sass', 'images', /*'php', 'livereload,'*/ 'watch']);
+gulp.task('default', ['sass', 'scripts', 'images', /*'php', 'livereload,'*/ 'watch']);
 
 
 gulp.task('watch', function () {
 
     //livereload.listen();
     gulp.watch(paths.scss.src + '**/*.scss', ['sass']);
-    //gulp.watch(paths.js.src + '**/*.js', ['scripts']);
+    gulp.watch(paths.js.src + '**/*.js', ['scripts']);
     //gulp.watch('images/*', ['images']);
 
 });
