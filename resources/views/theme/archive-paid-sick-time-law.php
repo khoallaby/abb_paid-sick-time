@@ -10,9 +10,9 @@ $PSTs = PaidSickTime::getPSTsByLocation();
         <p>In the United States, 8 states, 29 cities, 2 counties, and Washington D.C. have paid sick time laws on the books. This special section of the website provides an overview and comparison of these 40 laws</p>
     </div>
     <div class="col-1-3">
-        <form>
-            <input type="submit" class="btn" value="<?php esc_attr_e('Export page as PDF') ?>" />
-        </form>
+        <p class="alignright">
+            <a href="?export" class="btn"><?php esc_attr_e('Export page as PDF') ?></a>
+        </p>
     </div>
 </div>
 

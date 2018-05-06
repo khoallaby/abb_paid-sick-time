@@ -7,9 +7,9 @@ $answers = Answers::getAnswers( $post->ID );
 ?>
 <h2>Overview of Paid Sick Time Laws in the United States:<br /><?php echo $post->post_title; ?></h2>
 
-<form class="alignright">
-    <input type="submit" class="btn" value="<?php esc_attr_e('Export page as PDF') ?>" />
-</form>
+<p class="alignright">
+    <a href="?export" class="btn"><?php esc_attr_e('Export page as PDF') ?></a>
+</p>
 
 
 <p class="updated"><em>Updated on <?php the_modified_date('F j, Y'); ?></em></p>
