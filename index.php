@@ -18,6 +18,7 @@ define( 'abb_pst_plugin_version', '1.0.0' );
 require_once( dirname(__FILE__) . '/resources/controllers/Base.php');
 require_once( dirname(__FILE__) . '/resources/controllers/Shortcodes.php');
 
+require_once( dirname(__FILE__) . '/resources/controllers/Pdf.php');
 require_once( dirname(__FILE__) . '/resources/controllers/CustomPostTypes.php');
 require_once( dirname(__FILE__) . '/resources/controllers/PaidSickTime.php');
 require_once( dirname(__FILE__) . '/resources/controllers/Locations.php');

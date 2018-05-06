@@ -21,6 +21,7 @@ class PaidSickTime extends CustomPostTypes {
 
         add_action( 'init', [ $this, 'registerAll' ]);
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 100 );
+        add_action( 'template_redirect', [ $this, 'renderPdf' ] );
     }
 
 
@@ -30,6 +31,26 @@ class PaidSickTime extends CustomPostTypes {
             'supports'            => [ 'title', 'editor', 'page-attributes', 'custom-fields', /*'thumbnail'*/ ],
             'taxonomies'          => [ Locations::$taxName ],
         ] );
+    }
+
+    /**
+     * Checks if we're exporting pdf on any of the CPT pages
+     */
+    public function renderPdf() {
+        if( isset($_REQUEST['export']) ) {
+            # if single
+            if( is_singular( self::$cptName ) ) {
+                Pdf::renderPdf();
+
+            # if archive
+            } elseif( is_post_type_archive( self::$cptName ) ) {
+                Pdf::renderPdf();
+
+            # if search
+            } elseif( is_singular( self::$cptName ) && is_single('search')) {
+                Pdf::renderPdf();
+            }
+        }
     }
 
 
