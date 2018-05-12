@@ -2,8 +2,7 @@
 namespace ABetterBalance\Plugin;
 global $post;
 
-// @todo: select only questions (from $_POST) with correct $key in array
-$questions = get_option( PaidSickTime::$questionsOptionName );
+$questions = Questions::getQuestions($_REQUEST['questions']);
 $args = [];
 
 if( isset($_REQUEST['locations']) && !empty($_REQUEST['locations']) )

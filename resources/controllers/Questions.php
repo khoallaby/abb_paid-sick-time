@@ -69,6 +69,22 @@ class Questions extends PaidSickTime {
 
     }
 
+    public static function getQuestions( $questionIDs = [] ) {
+        $questions = get_option( self::$questionsOptionName );
+
+        if( $questionIDs ) {
+            // return only the questions from $questionIDs
+            return array_filter(
+                $questions,
+                function($key) use ($questionIDs) {
+                    return in_array( $key, $questionIDs );
+                },
+                ARRAY_FILTER_USE_KEY
+            );
+        } else {
+            return $questions;
+        }
+    }
 }
 
 add_action( 'init', array( \ABetterBalance\Plugin\Questions::get_instance(), 'init' ));
