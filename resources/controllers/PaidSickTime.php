@@ -58,10 +58,9 @@ class PaidSickTime extends CustomPostTypes {
 
             # if archive
             } elseif( is_post_type_archive( PaidSickTime::$cptName ) ) {
-
                 $questions = get_option( PaidSickTime::$questionsOptionName );
-                $answers = Answers::getAnswers();
                 $locations = self::getPSTsByLocation( [], true );
+                $answers = Answers::getAnswers( $locations );
             }
 
 

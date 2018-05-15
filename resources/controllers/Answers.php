@@ -81,7 +81,7 @@ class Answers extends PaidSickTime {
         $answers = [];
 
         if( empty($posts) )
-            $posts = []; # todo: get all posts
+            $posts = static::getPSTsByLocation( [], true );
 
         if( is_array($posts) ) {
             foreach( $posts as $p )
