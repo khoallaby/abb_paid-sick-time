@@ -271,7 +271,7 @@ class Base {
 
 
 
-    public static function getView( $file, $return = false ) {
+    public static function getView( $file, $return = false, $vars = [] ) {
         $dirPlugin = dirname(__FILE__) . '/../views/';
         $dirtheme = 'views/';
         $fileName = $file . '.php';
@@ -281,6 +281,7 @@ class Base {
         else
             $template = $dirPlugin . $fileName;
 
+        extract( $vars );
 
         if( $return )
             ob_start();
