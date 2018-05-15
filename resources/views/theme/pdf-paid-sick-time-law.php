@@ -7,7 +7,7 @@ global $post;
 <p class="updated"><em>Updated on <?php the_modified_date('F j, Y'); ?></em></p>
 
 <?php foreach( $locations as $location ) { ?>
-<div class="pstl-table-container">
+<div class="pstl-table-container" style="page-break-after: always;">
     <table class="pstl-table">
         <thead>
         <tr>
