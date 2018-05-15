@@ -72,17 +72,24 @@ class Answers extends PaidSickTime {
 
 
     /**
-     * Get the answers from $postID
-     * @param null $postID
+     * Get the answers from $posts
+     * @param array $posts - An array of location IDs
      *
-     * @return array $answers
+     * @return array|mixed
      */
-    public static function getAnswers( $postID = null ) {
-        global $post;
-        if( !$postID )
-            $postID = $post->ID;
+    public static function getAnswers( $posts = [] ) {
+        $answers = [];
 
-        $answers = get_post_meta( $postID, PaidSickTime::$answersMetaName, true );
+        if( empty($posts) )
+            $posts = []; # todo: get all posts
+
+        if( is_array($posts) ) {
+            foreach( $posts as $p )
+                $answers[$p] = get_post_meta( $p, PaidSickTime::$answersMetaName, true );
+        } elseif( !is_array($posts) ) {
+            $answers = get_post_meta( $posts, PaidSickTime::$answersMetaName, true );
+        }
+
 
         return $answers;
     }
