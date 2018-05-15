@@ -2,7 +2,7 @@
 namespace ABetterBalance\Plugin;
 global $post;
 
-$questions = Questions::getQuestions($_REQUEST['questions']);
+$questions = Questions::getQuestions( $_REQUEST['questions'] );
 $args = [];
 
 if( isset($_REQUEST['locations']) && !empty($_REQUEST['locations']) )
@@ -13,9 +13,9 @@ $PSTs = PaidSickTime::getPSTs( $args );
 ?>
 <h2>Overview of Paid Sick Time Laws in the United States:<br />Comparison Results</h2>
 
-<form>
-    <input type="submit" class="btn" value="<?php esc_attr_e('Export page as PDF') ?>" />
-</form>
+<p class="alignright">
+    <a href="<?php echo '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>&export" class="btn"><?php esc_attr_e('Export page as PDF') ?></a>
+</p>
 
 
 <p class="updated"><em>Updated on September 1, 2017</em></p>
