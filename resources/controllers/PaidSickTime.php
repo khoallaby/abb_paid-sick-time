@@ -37,19 +37,40 @@ class PaidSickTime extends CustomPostTypes {
      * Checks if we're exporting pdf on any of the CPT pages
      */
     public function renderPdf() {
-        if( isset($_REQUEST['export']) ) {
-            # if single
-            if( is_singular( self::$cptName ) ) {
-                Pdf::renderPdf();
+        global $post;
 
-            # if archive
-            } elseif( is_post_type_archive( self::$cptName ) ) {
-                Pdf::renderPdf();
+        if( isset($_REQUEST['export']) ) {
+            $questions = $answers = $locations = [];
 
             # if search
-            } elseif( is_singular( self::$cptName ) && is_single('search')) {
-                Pdf::renderPdf();
+            if( is_singular( PaidSickTime::$cptName ) && is_single('search')) {
+                $questionIDs = isset($_REQUEST['questions']) ? $_REQUEST['questions'] : [];
+                $locations = isset($_REQUEST['locations']) ? $_REQUEST['locations'] : [];
+
+                $questions = Questions::getQuestions( $questionIDs );
+                $answers = Answers::getAnswers( $locations );
+
+            # if single
+            } elseif( is_singular( PaidSickTime::$cptName ) ) {
+                $questions = get_option( PaidSickTime::$questionsOptionName );
+                $answers = Answers::getAnswers( $post->ID );
+                $locations = [ $post->ID ];
+
+            # if archive
+            } elseif( is_post_type_archive( PaidSickTime::$cptName ) ) {
+
+                $questions = get_option( PaidSickTime::$questionsOptionName );
+                $answers = Answers::getAnswers();
+                $locations = [ $post->ID ]; // @todo: get all postIds
             }
+
+
+            Pdf::renderPdf( [
+                'questions' => $questions,
+                'answers' => $answers,
+                'locations' => $locations
+            ] );
+
         }
     }
 
