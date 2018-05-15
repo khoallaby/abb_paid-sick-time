@@ -1,8 +1,7 @@
 <?php
 namespace ABetterBalance\Plugin;
 
-
-$questions = get_option( PaidSickTime::$questionsOptionName );
+$questions = Questions::getQuestions();
 ?>
 
 <script type="text/javascript">

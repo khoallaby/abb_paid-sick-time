@@ -70,7 +70,7 @@ class Questions extends PaidSickTime {
     }
 
     public static function getQuestions( $questionIDs = [] ) {
-        $questions = get_option( self::$questionsOptionName );
+        $questions = get_option( static::$questionsOptionName );
 
         if( $questionIDs ) {
             // return only the questions from $questionIDs

@@ -2,7 +2,7 @@
 namespace ABetterBalance\Plugin;
 global $post;
 
-$questions = get_option( PaidSickTime::$questionsOptionName );
+$questions = Questions::getQuestions();
 $answers = Answers::getAnswers( $post->ID );
 ?>
 

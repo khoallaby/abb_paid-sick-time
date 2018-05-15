@@ -1,7 +1,7 @@
 <?php
 namespace ABetterBalance\Plugin;
 
-$questions = get_option( PaidSickTime::$questionsOptionName );
+$questions = Questions::getQuestions();
 $PSTs = PaidSickTime::getPSTsByLocation();
 ?>
 
