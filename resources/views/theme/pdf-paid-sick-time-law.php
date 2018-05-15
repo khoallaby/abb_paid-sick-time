@@ -6,8 +6,11 @@ global $post;
 
 <p class="updated"><em>Updated on <?php the_modified_date('F j, Y'); ?></em></p>
 
-<?php foreach( $locations as $location ) { ?>
-<div class="pstl-table-container" style="page-break-after: always;">
+<?php
+foreach( $locations as $location ) {
+    $style = $location === end($locations) ? '' : 'page-break-after: always;';
+?>
+<div class="pstl-table-container" style="<?php echo $style; ?>">
     <table class="pstl-table">
         <thead>
         <tr>
