@@ -15,11 +15,10 @@ class Pdf extends Base {
 
 
 	# https://gist.github.com/calvinchoy/5821235
-    public static function renderPdf( $posts = null, $questions = null ) {
+    public static function renderPdf( $vars = [] ) {
 
-	    $content = self::getView( 'theme/pdf-paid-sick-time-law', true );
+	    $content = self::getView( 'theme/pdf-paid-sick-time-law', true, $vars );
         $stylesheet = file_get_contents( abb_pst_plugin_path . '/assets/css/style.css');
-        #die($stylesheet);
 
         self::$pdf->WriteHTML( $stylesheet, 1 );
         self::$pdf->WriteHTML( $content, 2 );
