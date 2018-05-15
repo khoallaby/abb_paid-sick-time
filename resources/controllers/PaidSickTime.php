@@ -61,7 +61,7 @@ class PaidSickTime extends CustomPostTypes {
 
                 $questions = get_option( PaidSickTime::$questionsOptionName );
                 $answers = Answers::getAnswers();
-                $locations = [ $post->ID ]; // @todo: get all postIds
+                $locations = self::getPSTsByLocation( [], true );
             }
 
 
@@ -101,9 +101,13 @@ class PaidSickTime extends CustomPostTypes {
      * @return \WP_Query
      */
     public static function getPSTs( $args = [] ) {
+        // exclude the search page
+        #$search = get_page_by_title( 'search', OBJECT, self::$cptName );
+
         $defaults = [
             #'order'   => 'DESC',
             #'orderby' => 'display_name',
+            #'post__not_in' => [ $search->ID ]
         ];
         $args = wp_parse_args( $args, $defaults );
 
@@ -116,15 +120,17 @@ class PaidSickTime extends CustomPostTypes {
 
     /**
      * Gets all the PST posts and parses all the posts into their separate locations, i.e. city/county/state
-     * @param array $args   Args for wp_query
+     * @param array $args       - Args for wp_query
+     * @param bool $returnAsIDs - Return the PSTs as IDs
      *
      * @return array
      */
-    public static function getPSTsByLocation( $args = [] ) {
-        $posts = self::getPSTS( $args );
-        $postsOrdered = []; // an array divided by the locations.
+    public static function getPSTsByLocation( $args = [], $returnAsIDs = false  ) {
+        $posts         = self::getPSTS( $args );
+        $postsIDs      = [];
+        $postsOrdered  = []; // an array divided by the locations.
         $locationSlugs = [];
-        $californiaID = 0;
+        $californiaID  = 0;
 
         // get postID of california
         foreach( $posts as $post ) {
@@ -144,6 +150,7 @@ class PaidSickTime extends CustomPostTypes {
             if( !empty($locations) ) {
                 foreach( $locations as $location ) {
                     $postsOrdered[$location->slug][] = $post;
+                    $postsIDs[] = $post->ID;
 
                     // logic for getting cali city/counties
                     if( $post->post_parent == $californiaID )
@@ -155,7 +162,11 @@ class PaidSickTime extends CustomPostTypes {
             }
 
         endforeach;
-        return $postsOrdered;
+
+        if( $returnAsIDs )
+            return $postsIDs;
+        else
+            return $postsOrdered;
 
     }
 
