@@ -272,15 +272,7 @@ class Base {
 
 
     public static function getView( $file, $return = false, $vars = [] ) {
-        $dirPlugin = dirname(__FILE__) . '/../views/';
-        $dirtheme = 'views/';
-        $fileName = $file . '.php';
-
-        if( $theme_file = locate_template([ $dirtheme . $fileName ]) )
-            $template = $theme_file;
-        else
-            $template = $dirPlugin . $fileName;
-
+        $template = self::getViewTemplate( $file );
         extract( $vars );
 
         if( $return )
@@ -292,6 +284,21 @@ class Base {
             return ob_get_clean();
         else
             return null;
+
+    }
+
+
+    public static function getViewTemplate( $file ) {
+        $dirPlugin = dirname(__FILE__) . '/../views/';
+        $dirtheme = 'views/';
+        $fileName = $file . '.php';
+
+        if( $theme_file = locate_template([ $dirtheme . $fileName ]) )
+            $template = $theme_file;
+        else
+            $template = $dirPlugin . $fileName;
+
+        return $template;
 
     }
 
