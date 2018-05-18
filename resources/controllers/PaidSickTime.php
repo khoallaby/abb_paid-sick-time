@@ -22,6 +22,8 @@ class PaidSickTime extends CustomPostTypes {
         add_action( 'init', [ $this, 'registerAll' ]);
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 100 );
         add_action( 'template_redirect', [ $this, 'renderPdf' ] );
+        add_filter( 'archive_template', [ $this, 'getArchiveTemplate' ] );
+        add_filter( 'single_template', [ $this, 'getSingleTemplate' ] );
     }
 
 
@@ -73,6 +75,22 @@ class PaidSickTime extends CustomPostTypes {
         }
     }
 
+
+    // Actions for pulling overriding plugin template files for archive/single PST pages
+    function getArchiveTemplate( $archiveTemplate ) {
+        $templateName = 'archive-paid-sick-time-law';
+        if ( is_post_type_archive ( self::$cptName ) && !strpos($archiveTemplate, $templateName) )
+            $archiveTemplate = static::getViewTemplate( 'theme/' . $templateName );
+        return $archiveTemplate;
+    }
+
+
+    function getSingleTemplate( $singleTemplate ) {
+        $templateName = 'single-paid-sick-time-law';
+        if ( is_singular( self::$cptName ) && !strpos($singleTemplate, $templateName) )
+            $singleTemplate = static::getViewTemplate( 'theme/' . $templateName );
+        return $singleTemplate;
+    }
 
 
 
