@@ -5,13 +5,11 @@ class Search extends PaidSickTime {
 
 
     public function init() {
-        add_shortcode( 'pstl-search', [ $this, 'shortcodeSearch' ] );
+        add_shortcode( 'pst-search', function() {
+            static::getView( 'search' );
+        } );
     }
 
-
-    public function shortcodeSearch() {
-        self::getView( 'search' );
-    }
 
 }
 
