@@ -139,13 +139,15 @@ gulp.task('minify-scss', function() {
  **/
 gulp.task('scripts', function() {
     gulp.src([
-            //bowerDir + 'angular/angular.js',
-            paths.js.src + '**/*.js'
+            paths.js.src + '**/*.js',
+            '!' + paths.js.src + '/scripts.min.*' // ignore minified JS
         ])
         .pipe(sourcemaps.init())
+        /*
         .pipe(concat('scripts.js'))
         .pipe(gulp.dest(paths.js.pub))
         .pipe(uglify())
+        */
         .pipe(concat('scripts.min.js'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.js.pub));
