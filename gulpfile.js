@@ -149,6 +149,7 @@ gulp.task('scripts', function() {
         .pipe(uglify())
         */
         .pipe(concat('scripts.min.js'))
+        .pipe(uglify())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.js.pub));
     /*
