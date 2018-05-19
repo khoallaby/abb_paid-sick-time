@@ -23,7 +23,7 @@ class PaidSickTime extends CustomPostTypes {
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 100 );
         add_action( 'template_redirect', [ $this, 'renderPdf' ] );
         add_filter( 'archive_template', [ $this, 'getArchiveTemplate' ] );
-        add_filter( 'single_template', [ $this, 'getSingleTemplate' ] );
+        //add_filter( 'single_template', [ $this, 'getSingleTemplate' ] );
     }
 
 
@@ -86,6 +86,7 @@ class PaidSickTime extends CustomPostTypes {
 
 
     function getSingleTemplate( $singleTemplate ) {
+        vard($singleTemplate);
         $templateName = 'single-paid-sick-time-law';
         if ( is_singular( self::$cptName ) && !strpos($singleTemplate, $templateName) )
             $singleTemplate = static::getViewTemplate( 'theme/' . $templateName );
@@ -198,6 +199,16 @@ class PaidSickTime extends CustomPostTypes {
 
 
 
+    /**************************************************************************************************************
+     * Functions for pulling in views from theme templates
+     *************************************************************************************************************/
+    public static function getArchiveView() {
+        static::getView('theme/archive-' . self::$cptName );
+    }
+
+    public static function getSingleView() {
+        static::getView('theme/single-' . self::$cptName );
+    }
 
 
 
