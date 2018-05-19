@@ -50,7 +50,7 @@ var onError = function (error) {
  */
 gulp.task('php', function() {
     // remove trailing slash so it doesnt explode
-    var dir = '.';
+    var dir = '../../../';
     php.server({
         base: dir,
         hostname: 'localhost',
@@ -181,12 +181,12 @@ gulp.task('prod', ['minify-scss', 'scripts'], function() {
 
 });
 
-gulp.task('default', ['sass', 'scripts', 'images', /*'php', 'livereload,'*/ 'watch']);
+gulp.task('default', ['sass', 'scripts', 'images', 'php', 'livereload', 'watch']);
 
 
 gulp.task('watch', function () {
 
-    //livereload.listen();
+    livereload.listen();
     gulp.watch(paths.scss.src + '**/*.scss', ['sass']);
     gulp.watch(paths.js.src + '**/*.js', ['scripts']);
     //gulp.watch('images/*', ['images']);
