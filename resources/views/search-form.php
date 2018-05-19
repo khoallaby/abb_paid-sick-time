@@ -17,13 +17,19 @@ $PSTs = PaidSickTime::getPSTsByLocation();
         <h3>Issues</h3>
         <ul>
             <?php foreach ( (array) $questions as $k => $question ) : ?>
-                <li class="question">
+                <li class="question-<?php echo $k; ?>">
                     <label>
                         <input type="checkbox" name="questions[]" value="<?php echo $k; ?>" />
                         <span><?php echo nl2br($question); ?></span>
                     </label>
                 </li>
             <?php endforeach; ?>
+            <li class="question">
+                <label>
+                    <input type="checkbox" class="select-all" onClick="selectAll(this)" />
+                    <span><em>All the above</em></span>
+                </label>
+            </li>
         </ul>
     </div>
     <div class="col-1-2 locations-container">
