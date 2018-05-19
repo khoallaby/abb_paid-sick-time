@@ -47,7 +47,7 @@ $PSTs = PaidSickTime::getPSTsByLocation();
                     <?php endforeach; ?>
                     <li class="location">
                         <label>
-                            <input type="checkbox" class="location-all" />
+                            <input type="checkbox" class="select-all" onClick="selectAll(this)" />
                             <span><em>All the above</em></span>
                         </label>
                     </li>
