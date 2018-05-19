@@ -46,7 +46,7 @@ $PSTs = PaidSickTime::getPSTsByLocation();
                     <?php foreach ( $PSTs[$slug] as $location ) : ?>
                         <li class="location">
                             <label>
-                                <input type="checkbox" name="locations[]" value="<?php echo $location->ID; ?>" />
+                                <input type="checkbox" name="locations[]" value="<?php echo $location->ID; ?>" data-parent="<?php echo $location->post_parent; ?>" />
                                 <span><?php echo $location->post_title; ?></span>
                             </label>
                         </li>
