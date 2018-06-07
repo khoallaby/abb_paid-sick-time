@@ -40,7 +40,7 @@ class Answers extends PaidSickTime {
      */
     public static function saveAnswersPage() {
         if( isset($_POST['answers']) && isset($_POST[ static::$nonce ]) )
-            self::saveAnswers( $_POST['answers'] );
+            self::saveAnswersAdmin( $_POST['answers'] );
     }
 
 
@@ -55,21 +55,34 @@ class Answers extends PaidSickTime {
             $postID = $post->ID;
 
         if( !$answers || empty($answers) )
-            return;
-
-        if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-            return;
-
-        if( !static::canUpdateData() )
-            return;
+            return false;
 
         $answers = static::sanitizeData( $answers );
-        $update = update_post_meta( $postID, static::$answersMetaName, $answers );
-
-        static::printAdminNotices( $update );
-
+        return update_post_meta( $postID, static::$answersMetaName, $answers );
     }
 
+
+	/**
+	 * Function for saving answers on admin page
+	 * @param array $answers
+	 */
+	public static function saveAnswersAdmin( $answers = [], $postID = null ) {
+		global $post;
+		if( !$postID )
+			$postID = $post->ID;
+
+		if( !$answers || empty($answers) )
+			return;
+
+		if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+			return;
+
+		if( !static::canUpdateData() )
+			return;
+
+		$update = self::saveAnswers( $answers, $postID );
+		static::printAdminNotices( $update );
+	}
 
     /**
      * Get the answers from $posts

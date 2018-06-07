@@ -238,9 +238,8 @@ class PaidSickTime extends CustomPostTypes {
 
 
 		// save answers
-	    if( !empty($answers) ) {
+	    if( !empty($answers) )
 			Answers::saveAnswers( $answers, $postId );
-	    }
 		
 		// set state/city/county tags
 	    if( $state === true )
