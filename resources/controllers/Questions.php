@@ -42,15 +42,25 @@ class Questions extends PaidSickTime {
      */
     public static function saveQuestionsPage() {
         if( isset($_POST['questions']) && isset($_POST[ static::$nonce ]) )
-            self::saveQuestions( $_POST['questions'] );
+            self::saveQuestionsAdmin( $_POST['questions'] );
     }
 
 
+	/**
+	 * Generic function for saving questions
+	 * @param array $questions
+	 */
+	public static function saveQuestions( $questions = [] ) {
+		$questions = static::sanitizeData( $questions );
+		return update_option( static::$questionsOptionName, $questions );
+
+	}
+	
     /**
      * Generic function for saving questions
      * @param array $questions
      */
-    public static function saveQuestions( $questions = [] ) {
+    public static function saveQuestionsAdmin( $questions = [] ) {
         if( !$questions || empty($questions) ) {
             if( isset($_POST['questions']) )
                 $questions = $_POST['questions'];
@@ -62,8 +72,7 @@ class Questions extends PaidSickTime {
         if( !static::canUpdateData() )
             return;
 
-        $questions = static::sanitizeData( $questions );
-        $update = update_option( static::$questionsOptionName, $questions );
+        $update = self::saveQuestions( $questions );
 
         static::printAdminNotices( $update );
 
