@@ -85,6 +85,12 @@ class Questions extends PaidSickTime {
             return $questions;
         }
     }
+
+
+	public static function deleteQuestions() {
+		return delete_option( static::$questionsOptionName );
+
+	}
 }
 
 add_action( 'init', array( \ABetterBalance\Plugin\Questions::get_instance(), 'init' ));
