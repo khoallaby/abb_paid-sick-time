@@ -1,5 +1,6 @@
 {
     "require": {
-        "mpdf/mpdf": "^7.0"
+        "mpdf/mpdf": "^7.0",
+        "phpoffice/phpexcel" : "~1.8.1"
     }
 }
