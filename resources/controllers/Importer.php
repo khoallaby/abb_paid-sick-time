@@ -61,11 +61,8 @@ class Importer extends PaidSickTime {
 		#@todo: add nonce
 		#$url = $_SERVER['HTTP_REFERER'];
 
-		if( $file = $_FILES['pstl-import-file']['tmp_name'] ) {
-			self::setTableKeys();
-			$data = static::parseFile( $file );
-			self::importData( $data );
-		}
+		if( $file = $_FILES['pstl-import-file']['tmp_name'] )
+			static::parseFile( $file );
 
 		$url = html_entity_decode( menu_page_url( $_POST['page'], false ) );
 
@@ -123,15 +120,6 @@ class Importer extends PaidSickTime {
 		Search::addSearchPage();
 
 		$worksheet = self::loadFile( $file );
-		foreach($worksheet->getColumnIterator() as $column) {
-			foreach($column->getCellIterator() as $key => $cell){
-				#vard($key);
-				#vard($cell->getCalculatedValue());
-				#echo $key; // 0, 1, 2...
-				#echo $cell->getCalculatedValue(); // Value here
-			}
-		}
-
 
 		$highestRow    = $worksheet->getHighestRow();
 		$highestColumn = $worksheet->getHighestColumn();
@@ -166,7 +154,7 @@ class Importer extends PaidSickTime {
 
 				$state  = $title == $state ? true : $state;
 
-				$add = static::addPST( $title, $answers, $state, $city, $county );
+				static::addPST( $title, $answers, $state, $city, $county );
 			}
 
 		}
