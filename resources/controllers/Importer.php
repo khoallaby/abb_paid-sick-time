@@ -116,11 +116,11 @@ class Importer extends PaidSickTime {
 	 * @param string $file      Filename
 	 * @param bool $useHeaders  If there's a header column at row 1, use that as metakeys
 	 *
-	 * @return array
 	 */
 	public static function parseFile( $file, $useHeaders = true ) {
 
 		self::truncate();
+		Search::addSearchPage();
 
 		$worksheet = self::loadFile( $file );
 		foreach($worksheet->getColumnIterator() as $column) {
@@ -137,44 +137,20 @@ class Importer extends PaidSickTime {
 		$highestColumn = $worksheet->getHighestColumn();
 		#$statesArray   = $worksheet->rangeToArray( 'B1:' . $highestColumn . '1', null, true, true, true );
 		##$countiesArray = $worksheet->rangeToArray( 'B2:' . $highestColumn . '2', null, true, true, true );
-		$citiesArray   = $worksheet->rangeToArray( 'B3:' . $highestColumn . '3', null, true, true, true );
-		$dataArray     = array();
+		#$citiesArray   = $worksheet->rangeToArray( 'B3:' . $highestColumn . '3', null, true, true, true );
 
-		#vard($highestRow);
-		#vard($highestColumn);
-		#vard( $statesArray );
-		#vard($countiesArray);
-		#vard($citiesArray);
-		#$questions = Questions::getQuestions();
-
-		// loop through column letters
+		// loop through columns by letters
 		for ( $column = 'A'; $column != $highestColumn; $column++ ) {
-			// create array of answers
-			// start at 4, where the actual data starts
+			// create $answers array.. start at 4, where the actual data starts
 			$answers = [];
-			for ( $row = 4; $row <= $highestRow; $row++ ) {
+			for ( $row = 4; $row <= $highestRow; $row++ )
+				$answers[] = $worksheet->getCell( $column . $row )->getCalculatedValue();
 
-
-				$cell = $worksheet->getCell( $column . $row )->getCalculatedValue();
-				vard($cell);
-				#die();
-				$answers[] = $cell;
-				#$state = isset($statesArray[1][ $column ]) ? $statesArray[1][ $column ] : '';
-				#echo $column . $row . ' ---- ' . $cell . '<br>';
-				#$match = array_search( $cell, $questions );
-
-			}
-
-			// if row = A, figure out question IDs
+			// if column = A, save the questions
 			if( $column == 'A' ) {
-
 				Questions::saveQuestions( $answers );
-				#var_dump($questions);
-				#die();
-
 			// add PST
 			} else {
-				#$cell   = $worksheet->getCell( $column . $row )->getValue();
 				$state  = $worksheet->getCell( $column . 1 )->getValue();
 				$county = $worksheet->getCell( $column . 2 )->getValue();
 				$city   = $worksheet->getCell( $column . 3 )->getValue();
@@ -190,14 +166,10 @@ class Importer extends PaidSickTime {
 
 				$state  = $title == $state ? true : $state;
 
-				echo '------------------------------------<br>';
 				$add = static::addPST( $title, $answers, $state, $city, $county );
 			}
 
 		}
-
-
-		return $dataArray;
 
 	}
 

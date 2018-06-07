@@ -10,6 +10,19 @@ class Search extends PaidSickTime {
         } );
     }
 
+    public static function addSearchPage() {
+
+	    $args = [
+		    'post_title'   => 'Search',
+		    'post_content' => '[pst-search]',
+		    'post_status'  => 'publish',
+		    'post_type'    => self::$cptName,
+	    ];
+
+
+	    return wp_insert_post ( $args );
+    }
+
 
 }
 
