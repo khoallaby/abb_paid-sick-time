@@ -196,6 +196,65 @@ class PaidSickTime extends CustomPostTypes {
     }
 
 
+    public static function addPST( $title, $answers = [], $state = false, $city = '', $county = '' ) {
+
+		$args = [
+			'post_title'   => $title,
+			'post_content' => '',
+			'post_status'  => 'publish',
+			'post_type'    => self::$cptName,
+			//'meta_input'  => $meta
+		];
+
+		# update post if exists, else create a new one
+		if( $exists = get_page_by_title( $title, OBJECT, self::$cptName ) ) {
+			$postId = $args['ID'] = $exists->ID;
+			// todo: update post
+			#wp_update_post( $args );
+
+		} else {
+			// add state ID as parent
+			if( is_string($state) ) {
+				$statePost = get_page_by_title( $state, OBJECT, self::$cptName );
+				// state level post doesn't exist, so just create a blank one
+				if( !$statePost ) {
+					$statePostId = wp_insert_post( [
+						'post_title'  => $state,
+						'post_content'  => '',
+						'post_status' => 'publish',
+						'post_type'   => self::$cptName,
+					] );
+
+					#wp_set_object_terms( $statePostId, 'State', Locations::$taxName );
+
+					$args['post_parent'] = $statePostId;
+				} else {
+					$args['post_parent'] = $statePost->ID;
+				}
+			}
+
+			$postId = wp_insert_post( $args );
+		}
+
+
+		// save answers
+	    if( !empty($answers) ) {
+			Answers::saveAnswers( $answers, $postId );
+	    }
+		
+		// set state/city/county tags
+	    if( $state === true )
+		    wp_set_object_terms( $postId, 'State', Locations::$taxName );
+	    if( isset( $county ) )
+		    wp_set_object_terms( $postId, 'County', Locations::$taxName );
+	    if( isset( $city ) )
+		    wp_set_object_terms( $postId, 'City', Locations::$taxName );
+
+
+    }
+
+
+
 
 
 
