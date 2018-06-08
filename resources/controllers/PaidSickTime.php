@@ -123,8 +123,8 @@ class PaidSickTime extends CustomPostTypes {
         #$search = get_page_by_title( 'search', OBJECT, self::$cptName );
 
         $defaults = [
-            #'order'   => 'DESC',
-            #'orderby' => 'display_name',
+            'order'   => 'ASC',
+            'orderby' => 'display_name',
             #'post__not_in' => [ $search->ID ]
         ];
         $args = wp_parse_args( $args, $defaults );
