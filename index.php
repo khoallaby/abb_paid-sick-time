@@ -25,7 +25,7 @@ require_once( dirname(__FILE__) . '/resources/controllers/Locations.php');
 require_once( dirname(__FILE__) . '/resources/controllers/Answers.php');
 require_once( dirname(__FILE__) . '/resources/controllers/Questions.php');
 require_once( dirname(__FILE__) . '/resources/controllers/Search.php');
-require_once( dirname(__FILE__) . '/resources/controllers/importer.php');
+require_once( dirname(__FILE__) . '/resources/controllers/Importer.php');
 
 
 function vard($s) {
