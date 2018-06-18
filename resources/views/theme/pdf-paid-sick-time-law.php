@@ -10,7 +10,7 @@ global $post;
 foreach( $locations as $location ) {
     $style = $location === end($locations) ? '' : 'page-break-after: always;';
 ?>
-<div class="pstl-table-container" style="<?php echo $style; ?>">
+<div class="pstl-table-container pstl-pdf" style="<?php echo $style; ?>">
     <table class="pstl-table">
         <thead>
         <tr>
