@@ -324,7 +324,10 @@ class PaidSickTime extends CustomPostTypes {
     public static function sanitizeData( $data ) {
         # sanitize input
         $data = stripslashes_deep( $data );
-        $data = array_map( 'sanitize_textarea_field', $data );
+        # remove sanitize_textarea_field since it strips html tags
+        #$data = array_map( 'sanitize_textarea_field', $data );
+
+
 
         # removes empty elements
         $data = array_filter( $data, function($value) { return $value !== ''; } );

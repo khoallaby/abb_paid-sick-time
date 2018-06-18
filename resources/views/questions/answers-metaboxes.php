@@ -9,7 +9,7 @@ $answers = Answers::getAnswers( $post->ID );
 <?php foreach ( (array) $questions as $k => $question ) : ?>
 <div class="question" style="margin-bottom: 50px;">
     <h3><?php echo nl2br($question); ?></h3>
-    <textarea placeholder="" rows="5" name="answers[]" style="width: 100%;"><?php echo !empty($answers[$k]) ? sanitize_textarea_field( $answers[$k] ) : ''; ?></textarea>
+    <textarea placeholder="" rows="5" name="answers[]" style="width: 100%;"><?php echo !empty($answers[$k]) ? $answers[$k] : ''; ?></textarea>
 </div>
 <?php endforeach; ?>
 <p>
