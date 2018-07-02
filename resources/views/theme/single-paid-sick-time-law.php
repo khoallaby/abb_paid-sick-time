@@ -20,7 +20,7 @@ $answers = Answers::getAnswers( $post->ID );
         <thead>
         <tr>
             <td></td>
-            <td class="pst-title"><?php echo $post->post_title; ?></td>
+            <td class="location-title"><?php echo $post->post_title; ?></td>
         </tr>
         </thead>
         <tbody>
