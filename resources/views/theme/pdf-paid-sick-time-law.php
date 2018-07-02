@@ -8,7 +8,8 @@ global $post;
 
 <?php
 foreach( array_chunk($locations, 4) as $chunk ) {
-	$style = $location === end($locations) ? '' : 'page-break-after: always;';
+	foreach( $chunk as $location )
+		$style = $location === end($locations) ? '' : 'page-break-after: always;';
 ?>
 <div class="pstl-table-container pstl-pdf" style="<?php echo $style; ?>">
     <table class="pstl-table" autosize="1">
