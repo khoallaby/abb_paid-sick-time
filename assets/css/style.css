@@ -55,16 +55,24 @@
 }
 
 .pstl-pdf table.pstl-table {
+  border: 0;
   width: 100%;
 }
 
 .pstl-pdf table.pstl-table tr td {
+  border: 1px solid black;
   font-size: 10px;
   text-align: left;
   vertical-align: top;
 }
 
+.pstl-pdf table.pstl-table tr td.location-title {
+  background-color: #dcdcdc;
+  color: white;
+}
+
 .pstl-pdf table.pstl-table tr td.question {
+  background-color: #f1f1f1;
   width: 200px;
 }
 

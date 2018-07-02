@@ -1,14 +1,22 @@
 .pstl-pdf {
   table.pstl-table {
+    border: 0;
     width: 100%;
     tr td {
+      border: 1px solid black;
       font-size: 10px;
       text-align: left;
       vertical-align: top;
       //width: 25%;
 
+      &.location-title {
+        background-color: #dcdcdc;
+        color: white;
+      }
+
       &.question {
         //min-width: 400px;
+        background-color: #f1f1f1;
         width: 200px;
       }
       &.answer {
