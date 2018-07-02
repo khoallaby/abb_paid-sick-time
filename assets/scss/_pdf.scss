@@ -1,12 +1,24 @@
+.pstl-pdf {
+  table.pstl-table {
+    width: 100%;
+    tr td {
+      font-size: 10px;
+      text-align: left;
+      vertical-align: top;
+      //width: 25%;
 
-.testing {
-  background: blue;
-  color: red;
-  text-transform: uppercase;
-  font-size: 20px;
-}
+      &.question {
+        //min-width: 400px;
+        width: 200px;
+      }
+      &.answer {
+        width: 400px;
+      }
+    }
+  }
 
-
-.pstl-table-container.pstl-pdf {
+  &:last-child {
+    page-break-after: avoid !important;
+  }
 
 }

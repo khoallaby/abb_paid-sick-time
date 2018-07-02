@@ -1,6 +1,12 @@
 .post-type-archive-paid-sick-time-law { }
 
-.single-paid-sick-time-law { }
+.single-paid-sick-time-law {
+  .pstl-table {
+    td {
+      width: 50%;
+    }
+  }
+}
 
 
 .pstl-table-container {
@@ -8,8 +14,14 @@
 }
 
 .pstl-table {
+  border: 1px solid black;
+  border-spacing:0;
+  thead {
+    background-color: transparent;
+    //border-bottom: 1px solid black;
+  }
   tr td {
-    border: 1px solid black;
+    //border: 1px solid black;
     min-width: 300px;
     padding: 10px;
   }

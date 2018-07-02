@@ -32,14 +32,48 @@
   list-style-type: none;
 }
 
+.single-paid-sick-time-law .pstl-table td {
+  width: 50%;
+}
+
 .pstl-table-container {
   overflow-x: auto;
 }
 
-.pstl-table tr td {
+.pstl-table {
   border: 1px solid black;
+  border-spacing: 0;
+}
+
+.pstl-table thead {
+  background-color: transparent;
+}
+
+.pstl-table tr td {
   min-width: 300px;
   padding: 10px;
+}
+
+.pstl-pdf table.pstl-table {
+  width: 100%;
+}
+
+.pstl-pdf table.pstl-table tr td {
+  font-size: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.pstl-pdf table.pstl-table tr td.question {
+  width: 200px;
+}
+
+.pstl-pdf table.pstl-table tr td.answer {
+  width: 400px;
+}
+
+.pstl-pdf:last-child {
+  page-break-after: avoid !important;
 }
 
 /*# sourceMappingURL=style.css.map */
