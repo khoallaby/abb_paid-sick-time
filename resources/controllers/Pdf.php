@@ -11,7 +11,7 @@ class Pdf extends Base {
 	public function init() {
         require_once __DIR__ . '/../../vendor/autoload.php';
         self::$pdf = new \Mpdf\Mpdf( [
-        	#'orientation' => 'L',
+        	'orientation' => 'L',
 	        'shrink_tables_to_fit' => 1,
 	        'shrink_this_table_to_fit' => 1,
 	        #'table_error_report' => true,
