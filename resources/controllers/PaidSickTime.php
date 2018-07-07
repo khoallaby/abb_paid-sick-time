@@ -32,6 +32,7 @@ class PaidSickTime extends CustomPostTypes {
             'exclude_from_search' => true,
             'supports'            => [ 'title', 'editor', 'page-attributes', 'custom-fields', /*'thumbnail'*/ ],
             'taxonomies'          => [ Locations::$taxName ],
+	        'rewrite'             => [ 'slug' => static::uncleanName(static::$cptFullName) . 's' ],
         ] );
     }
 
