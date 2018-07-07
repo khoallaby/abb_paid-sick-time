@@ -7,7 +7,7 @@ global $post;
 <p class="updated"><em>Updated on <?php the_modified_date('F j, Y'); ?></em></p>
 
 <?php
-foreach( array_chunk($locations, 4) as $chunk ) {
+foreach( array_chunk($locations, 3) as $chunk ) {
 	foreach( $chunk as $location )
 		$style = $location === end($locations) ? '' : 'page-break-after: always;';
 ?>
