@@ -20,9 +20,6 @@ $PSTs = PaidSickTime::getPSTs( $args );
 
 <p class="updated"><em>Updated on September 1, 2017</em></p>
 
-<p><strong>Note: You must check at least one box under Issues and at least one box under location.</strong></p>
-
-
 <div class="pstl-table-container pstl-pdf">
     <table class="pstl-table">
         <thead>
