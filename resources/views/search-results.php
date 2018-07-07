@@ -14,7 +14,7 @@ $PSTs = PaidSickTime::getPSTs( $args );
 <h2>Overview of Paid Sick Time Laws in the United States:<br />Comparison Results</h2>
 
 <p class="alignright">
-    <a href="<?php echo '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>&export" class="btn"><?php esc_attr_e('Export page as PDF') ?></a>
+    <a href="<?php echo '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>&export" class="btn" target="_blank"><?php esc_attr_e('Export page as PDF') ?></a>
 </p>
 
 

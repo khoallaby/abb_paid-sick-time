@@ -11,7 +11,7 @@ $PSTs = PaidSickTime::getPSTsByLocation();
     </div>
     <div class="col-1-3">
         <p class="alignright">
-            <a href="?export" class="btn"><?php esc_attr_e('Export page as PDF') ?></a>
+            <a href="?export" class="btn" target="_blank"><?php esc_attr_e('Export page as PDF') ?></a>
         </p>
     </div>
 </div>
