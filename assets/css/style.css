@@ -49,6 +49,10 @@
   background-color: transparent;
 }
 
+.pstl-table tbody tr:nth-child(even) {
+  background-color: #dcdcdc;
+}
+
 .pstl-table tr td {
   min-width: 300px;
   padding: 10px;

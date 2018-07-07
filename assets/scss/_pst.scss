@@ -20,6 +20,11 @@
     background-color: transparent;
     //border-bottom: 1px solid black;
   }
+  tbody {
+    tr:nth-child(even) {
+      background-color: #dcdcdc;
+    }
+  }
   tr td {
     //border: 1px solid black;
     min-width: 300px;
